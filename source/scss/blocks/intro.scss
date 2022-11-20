@@ -93,6 +93,7 @@
   text-transform: uppercase;
   font-size: 2.4rem;
   line-height: 1.27;
+  animation: fadeIn .5s, easeOutElastic .5s;
 
   @media (min-width: $stop-scaling) {
     width: 509px;
@@ -133,6 +134,25 @@
       height: 1.1rem;
     }
   }
+}
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+@keyframes easeOutElastic {
+  0% {
+    transform: translateY(0%);
+  }
+
+  88% {
+    transform: translateY(-5%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+
 }
 
 .intro__label {

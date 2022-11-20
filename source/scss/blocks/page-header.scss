@@ -246,11 +246,12 @@
       content: "";
       position: absolute;
       bottom: 0;
-      width: 100%;
       height: 2px;
       background-color: $c-light;
-      display: none;
+      display: block;
       left: 0;
+      width: 0;
+      transition: width .3s ease-out, background-color .3s ease-out;
 
       @media (max-width: $tablet) and (orientation: portrait) {
         left: 0;
@@ -268,6 +269,8 @@
     &.active {
       &::after {
         display: block;
+        right: 0;
+        width: 100%;
       }
     }
 
@@ -277,7 +280,7 @@
       outline: none;
 
       &::after {
-        opacity: 1;
+        width: 100%;
         background-color: $c-purple;
       }
     }
