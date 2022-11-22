@@ -1,5 +1,6 @@
 .social-block {
   position: relative;
+  transition: all 3s ease-in-out;
 
   &:hover {
     .social-block__list {
@@ -17,6 +18,7 @@
   height: 4rem;
   color: $c-dark;
   border-radius: 50%;
+  transition: all 3s ease-in-out;
 
   @media (max-width: $tablet) and (orientation: portrait) {
     display: none;
@@ -46,7 +48,6 @@
 
   &:hover,
   .social-block--active & {
-    color: $c-purple;
 
     &::before {
       width: 112.5%;
@@ -138,13 +139,23 @@
   }
 
   .social-block--active & {
-    opacity: 1;
     pointer-events: auto;
+    li{
+      transition: all 0.3s ease-out;
+      opacity: 1;
+    }
+
+    @for $i from 1 through 5000 {
+      li:nth-child(#{$i}) {
+        transition-delay: 0.1s * $i;
+      }
+    }
   }
 
   li {
     flex: none;
     margin-bottom: 0.5rem;
+    opacity: 0;
 
     @media (min-width: $stop-scaling) {
       margin-bottom: 5px;
@@ -168,6 +179,7 @@
   color: $c-light;
   border: 2px solid transparent;
   border-radius: 50%;
+  transition: all .3s ease-in-out;
 
   @media (min-width: $stop-scaling) {
     width: 40px;
