@@ -1,13 +1,25 @@
 .screen {
-  position: relative;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   z-index: 1;
   overflow: hidden;
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0s ease-in-out 0.45s;
 
   &--hidden {
-    display: none;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &.active {
+    z-index: 2;
   }
 
   @media (max-width: $tablet) and (orientation: portrait) {
@@ -307,6 +319,10 @@
     background-size: auto calc(100vh - 13.8rem), 100% 25rem;
     background-position: top center, bottom center;
   }
+
+  .screen--intro.active ~ & {
+    transition-delay: 0s;
+  }
 }
 
 .screen--prizes {
@@ -314,7 +330,6 @@
 }
 
 .screen--game {
-  position: relative;
   background-color: $c-dark;
 
   &::before {
@@ -327,6 +342,7 @@
     background-image: url("../img/sonya.png");
     background-repeat: no-repeat;
     background-size: contain;
+    z-index: 1;
 
     @include retina {
       background-image: url("../img/sonya@2x.png");
@@ -361,4 +377,34 @@
 
 .screen--rules {
   background-color: $c-dark;
+}
+
+.screen--under-content{
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $c-dark;
+  transform: translateY(100%);
+  will-change: transform;
+
+  &.screen--under-content--visible {
+    animation: backgroundAppear 0.4s ease-in backwards;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+    }
+  }
+}
+
+
+@keyframes backgroundAppear {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
