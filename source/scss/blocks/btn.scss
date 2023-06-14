@@ -41,6 +41,7 @@
     z-index: -1;
     transform: scale(1);
     transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+    will-change: transform, width, background-color, border-color;
   }
 
   &:hover {

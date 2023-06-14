@@ -59,6 +59,14 @@
   transform: translate(-50%, -50%);
 }
 
+@mixin delay($rule, $number, $value) {
+  @for $i from 1 through ($number) {
+    &:nth-child(#{$i}) {
+      #{$rule}-delay: (#{$i*$value});
+    }
+  }
+}
+
 @mixin delay-with-selector($rule, $number, $value, $selector) {
   @for $i from 1 through ($number) {
     #{$selector}:nth-child(#{$i}) & {
