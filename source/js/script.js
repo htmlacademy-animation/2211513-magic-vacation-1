@@ -9,7 +9,7 @@ import form from './modules/form.js';
 import social from './modules/social.js';
 import full from './modules/full.js';
 import FullPageScroll from './modules/full-page-scroll';
-import {textAnimateSymbol} from './modules/animate-text';
+import textAnimateSymbol from './modules/animate-typography';
 
 // init modules
 full();
@@ -21,8 +21,7 @@ chat();
 result();
 form();
 social();
+textAnimateSymbol();
 
 const fullPageScroll = new FullPageScroll();
 fullPageScroll.init();
-
-textAnimateSymbol(document.getElementById(`intro-title`));
