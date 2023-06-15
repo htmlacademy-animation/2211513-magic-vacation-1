@@ -1479,21 +1479,23 @@ img {
   position: absolute;
   right: 0;
   top: 50%;
-  width: 10rem;
+  width: 100%;
   height: 100%;
   border-radius: 3rem;
   background: #fff;
   transform: translateY(-50%);
   will-change: width;
-  transition: width 0.3s ease;
+}
+.screen--game.active .form__field-wrapper::before, .screen--result.screen--show .form__field-wrapper::before {
+  animation: form-field-appear 0.3s ease both;
 }
 @media (prefers-reduced-motion: reduce) {
-  .form__field-wrapper::before {
-    transition: none;
+  .screen--game.active .form__field-wrapper::before, .screen--result.screen--show .form__field-wrapper::before {
+    animation: none;
   }
 }
-.screen--game.active .form__field-wrapper::before {
-  width: 100%;
+.screen--result.screen--show .form__field-wrapper::before {
+  animation-delay: 1s;
 }
 @media (min-width: 2000px) {
   .form__field-wrapper {
@@ -1535,16 +1537,18 @@ img {
   background: transparent;
   opacity: 0;
   will-change: opacity;
-  transition: opacity 0.3s ease 0.35s;
+  transition: opacity 0.3s ease-out 0.2s;
 }
 @media (prefers-reduced-motion: reduce) {
   .form__field {
     transition: none;
   }
 }
-.screen--game.active .form__field {
+.screen--game.active .form__field, .screen--result.screen--show .form__field {
   opacity: 1;
-  transition: none;
+}
+.screen--result .form__field {
+  transition-delay: 1.2s;
 }
 .form__field:focus {
   border: 1px solid #a67ee5;
@@ -1604,14 +1608,36 @@ img {
     height: 4rem;
   }
 }
+.screen--result .form__button {
+  will-change: opacity;
+  opacity: 0;
+  transition: opacity 0.3s ease-out 0.8s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .screen--result .form__button {
+    transition: none;
+  }
+}
+.screen--result.screen--show .form__button {
+  opacity: 1;
+}
 .form__button .btn__content {
   opacity: 0;
   will-change: opacity;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.3s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .form__button .btn__content {
+    transition: none;
+  }
 }
 .screen--game.active .form__button .btn__content {
   opacity: 1;
   transition-delay: 0.5s;
+}
+.screen--result.screen--show .form__button .btn__content {
+  opacity: 1;
+  transition-delay: 1s;
 }
 .form__button svg {
   position: absolute;
@@ -1645,31 +1671,48 @@ img {
   opacity: 1;
   transition-delay: 0.5s;
 }
+.screen--result.screen--show .form__button svg {
+  opacity: 1;
+  transition-delay: 1s;
+}
 
-.form--result .form__field {
+.form--result .form__field-wrapper {
   width: calc(100% - 31rem);
 }
 @media (min-width: 2000px) {
-  .form--result .form__field {
+  .form--result .form__field-wrapper {
     width: calc(100% - 310px);
   }
 }
 @media (orientation: portrait) {
-  .form--result .form__field {
+  .form--result .form__field-wrapper {
     width: calc(100% - 5rem);
   }
 }
 @media (max-width: 1024px) and (orientation: landscape) {
-  .form--result .form__field {
+  .form--result .form__field-wrapper {
     width: calc(100% - 9rem);
   }
 }
 @media (max-width: 768px) and (orientation: landscape) {
-  .form--result .form__field {
+  .form--result .form__field-wrapper {
     width: calc(100% - 5rem);
   }
 }
 
+@keyframes form-field-appear {
+  0% {
+    visibility: hidden;
+    width: 3.5em;
+  }
+  1% {
+    visibility: visible;
+    width: 3.5em;
+  }
+  100% {
+    width: 100%;
+  }
+}
 .game {
   flex-grow: 1;
   display: flex;
@@ -1870,6 +1913,9 @@ img {
     font-size: 5rem;
   }
 }
+.intro__title > span:last-child {
+  transform: translateY(-0.2em);
+}
 
 .intro__content {
   display: flex;
@@ -1917,7 +1963,20 @@ img {
   text-transform: uppercase;
   font-size: 2.4rem;
   line-height: 1.27;
-  animation: fadeIn 0.5s, easeOutElastic 0.5s;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  transition-delay: 1s;
+  will-change: transform, opacity;
+}
+.screen--intro.active .intro__message {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro__message {
+    transition: none;
+  }
 }
 @media (min-width: 2000px) {
   .intro__message {
@@ -1963,28 +2022,24 @@ img {
   }
 }
 
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes easeOutElastic {
-  0% {
-    transform: translateY(10%);
-  }
-  100% {
-    transform: translateY(0%);
-  }
-}
 .intro__label {
   margin: 0 0 1.6rem;
   max-width: 25rem;
   text-transform: uppercase;
   font-size: 2.4rem;
   line-height: 1.2;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  transition-delay: 1.55s;
+  will-change: transform, opacity;
+}
+.screen--intro.active .intro__label {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro__label {
+    transition: none;
+  }
 }
 @media (min-width: 2000px) {
   .intro__label {
@@ -2596,6 +2651,19 @@ img {
   flex-direction: column;
   padding: 14.6rem 0 7.7rem;
   width: 100%;
+  opacity: 1;
+  transform: scale(1);
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  will-change: transform, opacity;
+}
+@media (prefers-reduced-motion: reduce) {
+  .prizes {
+    transition: none;
+  }
+}
+.screen--hidden .prizes {
+  opacity: 0;
+  transform: scale(0.96);
 }
 @media (min-width: 2000px) {
   .prizes {
@@ -3001,18 +3069,6 @@ img {
     left: -1rem;
     right: -1rem;
   }
-}
-.result__image picture {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.result__image img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
 }
 
 .result__title {
@@ -3672,14 +3728,11 @@ img {
   overflow: hidden;
   opacity: 1;
   pointer-events: auto;
-  transition: opacity 0s ease-in-out 0.45s;
+  transition: opacity 0s ease 0.4s;
 }
 .screen--hidden {
   opacity: 0;
   pointer-events: none;
-}
-.screen.active {
-  z-index: 2;
 }
 @media (max-width: 1024px) and (orientation: portrait) {
   .screen {
@@ -3729,25 +3782,43 @@ img {
 }
 
 .screen__footer {
-  display: block;
   position: absolute;
-  bottom: -3.5rem;
+  bottom: 0;
   left: 0;
   right: 0;
   color: #5f458c;
   background-color: #ffffff;
   z-index: 1;
-  transition: all 0.5s cubic-bezier(0.5, 0.85, 0.5, 0.85);
+  transform: translateY(100%);
+  will-change: transform;
+  transition: transform 0.35s cubic-bezier(0.5, 0.85, 0.5, 0.85);
+}
+.page--loaded .screen__footer {
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .screen__footer {
+    transition: none;
+  }
 }
 @media (max-width: 1024px) and (orientation: portrait) {
   .screen__footer {
     width: 3.5rem;
     height: 3.5rem;
     border-radius: 0 3.6rem 0 0;
+    will-change: width, height;
+    transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+    transition-delay: 0.3s;
   }
   .screen__footer.screen__footer--full {
     width: 100%;
     height: 18rem;
+    transition-delay: 0s;
+  }
+}
+@media (max-width: 1024px) and (orientation: portrait) and (prefers-reduced-motion: reduce) {
+  .screen__footer {
+    transition: none;
   }
 }
 @media (max-width: 768px) and (orientation: landscape) {
@@ -3755,22 +3826,27 @@ img {
     width: 3.5rem;
     height: 3.5rem;
     border-radius: 0 3.6rem 0 0;
+    will-change: width, height;
+    transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+    transition-delay: 0.3s;
   }
   .screen__footer.screen__footer--full {
     width: 100%;
     height: 16rem;
+    transition-delay: 0s;
   }
 }
-
-.body-load .screen__footer {
-  display: block;
-  bottom: 0;
+@media (max-width: 768px) and (orientation: landscape) and (prefers-reduced-motion: reduce) {
+  .screen__footer {
+    transition: none;
+  }
 }
 
 .screen__footer-wrapper {
   margin: 0 auto;
   padding: 0 4rem;
   width: 100%;
+  position: relative;
 }
 @media (min-width: 2000px) {
   .screen__footer-wrapper {
@@ -3790,17 +3866,33 @@ img {
 @media (max-width: 1024px) and (orientation: portrait) {
   .screen__footer-wrapper {
     opacity: 0;
+    will-change: opacity;
+    transition: opacity 0.3s ease-in-out;
   }
   .screen__footer--full .screen__footer-wrapper {
     opacity: 1;
+    transition-delay: 0.3s;
+  }
+}
+@media (max-width: 1024px) and (orientation: portrait) and (prefers-reduced-motion: reduce) {
+  .screen__footer-wrapper {
+    transition: none;
   }
 }
 @media (max-width: 768px) and (orientation: landscape) {
   .screen__footer-wrapper {
     opacity: 0;
+    will-change: opacity;
+    transition: opacity 0.3s ease-in-out;
   }
   .screen__footer--full .screen__footer-wrapper {
     opacity: 1;
+    transition-delay: 0.3s;
+  }
+}
+@media (max-width: 768px) and (orientation: landscape) and (prefers-reduced-motion: reduce) {
+  .screen__footer-wrapper {
+    transition: none;
   }
 }
 
@@ -3826,19 +3918,35 @@ img {
 @media (max-width: 1024px) and (orientation: portrait) {
   .screen__footer-enlarge {
     display: block;
+    will-change: opacity;
+    transition: opacity 0.3s ease-in-out 0.3s;
   }
   .screen__footer--full .screen__footer-enlarge {
     opacity: 0;
     pointer-events: none;
+    transition-delay: 0s;
+  }
+}
+@media (max-width: 1024px) and (orientation: portrait) and (prefers-reduced-motion: reduce) {
+  .screen__footer-enlarge {
+    transition: none;
   }
 }
 @media (max-width: 768px) and (orientation: landscape) {
   .screen__footer-enlarge {
     display: block;
+    will-change: opacity;
+    transition: opacity 0.3s ease-in-out 0.3s;
   }
   .screen__footer--full .screen__footer-enlarge {
     opacity: 0;
     pointer-events: none;
+    transition-delay: 0s;
+  }
+}
+@media (max-width: 768px) and (orientation: landscape) and (prefers-reduced-motion: reduce) {
+  .screen__footer-enlarge {
+    transition: none;
   }
 }
 .screen__footer-enlarge svg {
@@ -3874,10 +3982,18 @@ img {
     display: block;
     opacity: 0;
     pointer-events: none;
+    will-change: opacity;
+    transition: opacity 0.3s ease-in-out;
   }
   .screen__footer--full .screen__footer-collapse {
     opacity: 1;
     pointer-events: auto;
+    transition-delay: 0.3s;
+  }
+}
+@media (max-width: 1024px) and (orientation: portrait) and (prefers-reduced-motion: reduce) {
+  .screen__footer-collapse {
+    transition: none;
   }
 }
 @media (max-width: 768px) and (orientation: landscape) {
@@ -3885,10 +4001,18 @@ img {
     display: block;
     opacity: 0;
     pointer-events: none;
+    will-change: opacity;
+    transition: opacity 0.3s ease-in-out;
   }
   .screen__footer--full .screen__footer-collapse {
     opacity: 1;
     pointer-events: auto;
+    transition-delay: 0.3s;
+  }
+}
+@media (max-width: 768px) and (orientation: landscape) and (prefers-reduced-motion: reduce) {
+  .screen__footer-collapse {
+    transition: none;
   }
 }
 .screen__footer-collapse svg {
@@ -4036,9 +4160,6 @@ img {
     background-position: top center, bottom center;
   }
 }
-.screen--intro.active ~ .screen--story {
-  transition-delay: 0s;
-}
 
 .screen--prizes {
   background-color: #5f458c;
@@ -4050,6 +4171,7 @@ img {
 .screen--game::before {
   content: "";
   position: absolute;
+  z-index: 1;
   right: -8.5rem;
   bottom: 0;
   width: 32.7rem;
@@ -4057,7 +4179,6 @@ img {
   background-image: url("../img/sonya.png");
   background-repeat: no-repeat;
   background-size: contain;
-  z-index: 1;
 }
 @media (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
   .screen--game::before {
@@ -4095,34 +4216,6 @@ img {
   background-color: #5f458c;
 }
 
-.screen--under-content {
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #5f458c;
-  transform: translateY(100%);
-  will-change: transform;
-}
-.screen--under-content.screen--under-content--visible {
-  animation: backgroundAppear 0.4s ease-in backwards;
-}
-@media (prefers-reduced-motion: reduce) {
-  .screen--under-content.screen--under-content--visible {
-    animation: none;
-  }
-}
-
-@keyframes backgroundAppear {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
 .slider {
   position: relative;
   flex-grow: 1;
@@ -4566,7 +4659,7 @@ img {
   height: 2.2rem;
 }
 .page--loaded .social-block__toggler svg {
-  animation: toggler-icon-appear 0.05s ease 0.35s both;
+  animation: fade-in 0.05s ease 0.35s both;
 }
 @media (prefers-reduced-motion: reduce) {
   .page--loaded .social-block__toggler svg {
@@ -4806,14 +4899,6 @@ img {
   }
   to {
     transform: translate3d(-50%, -50%, 0) scale(1);
-  }
-}
-@keyframes toggler-icon-appear {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }
 .overlay-screen {
