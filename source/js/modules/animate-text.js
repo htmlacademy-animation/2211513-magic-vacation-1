@@ -86,7 +86,7 @@ class AnimateTypography {
 
     document.body.addEventListener(SCREEN_ACTIVE_SET, this.onToggleAnimationHandler);
 
-    const text = this._node.textContent.trim().split(` `).filter((word)=> word !== ``);
+    const text = this._node.textContent.trim().split(/\s/g).filter((word)=> word !== ``);
 
     const content = text.reduce((fragmentParent, word, wordIndex) => {
       const wordElement = Array.from(word).reduce((fragment, char, charIndex) => {
