@@ -7,11 +7,12 @@ import chat from './modules/chat.js';
 import result from './modules/result.js';
 import form from './modules/form.js';
 import social from './modules/social.js';
-import full from './modules/full.js';
+import pageLoaded from './modules/page-loaded.js';
 import FullPageScroll from './modules/full-page-scroll';
+import animateText from './modules/animate-text';
 
 // init modules
-full();
+pageLoaded();
 mobileHeight();
 slider();
 menu();
@@ -20,6 +21,7 @@ chat();
 result();
 form();
 social();
+animateText();
 
 const fullPageScroll = new FullPageScroll();
 fullPageScroll.init();

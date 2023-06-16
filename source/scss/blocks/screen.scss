@@ -11,15 +11,11 @@
   overflow: hidden;
   opacity: 1;
   pointer-events: auto;
-  transition: opacity 0s ease-in-out 0.45s;
+  transition: opacity 0s ease 0.4s;
 
   &--hidden {
     opacity: 0;
     pointer-events: none;
-  }
-
-  &.active {
-    z-index: 2;
   }
 
   @media (max-width: $tablet) and (orientation: portrait) {
@@ -51,24 +47,41 @@
 }
 
 .screen__footer {
-  display: block;
   position: absolute;
-  bottom: -3.5rem;
+  bottom: 0;
   left: 0;
   right: 0;
   color: $c-dark;
   background-color: $c-light;
   z-index: 1;
-  transition: all .5s $easing-fast;
+  transform: translateY(100%);
+  will-change: transform;
+  transition: transform 0.35s $easing-fast;
+
+  .page--loaded & {
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 
   @media (max-width: $tablet) and (orientation: portrait) {
     width: 3.5rem;
     height: 3.5rem;
     border-radius: 0 3.6rem 0 0;
+    will-change: width, height;
+    transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+    transition-delay: 0.3s;
 
     &.screen__footer--full {
       width: 100%;
       height: 18rem;
+      transition-delay: 0s;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
     }
   }
 
@@ -76,36 +89,54 @@
     width: 3.5rem;
     height: 3.5rem;
     border-radius: 0 3.6rem 0 0;
+    will-change: width, height;
+    transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+    transition-delay: 0.3s;
 
     &.screen__footer--full {
       width: 100%;
       height: 16rem;
+      transition-delay: 0s;
     }
-  }
-}
-.body-load{
-  .screen__footer{
-    display: block;
-    bottom: 0;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
   }
 }
 
 .screen__footer-wrapper {
   @include container;
 
+  position: relative;
+
   @media (max-width: $tablet) and (orientation: portrait) {
     opacity: 0;
+    will-change: opacity;
+    transition: opacity 0.3s ease-in-out;
 
     .screen__footer--full & {
       opacity: 1;
+      transition-delay: 0.3s;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
     }
   }
 
   @media (max-width: $mobile) and (orientation: landscape) {
     opacity: 0;
+    will-change: opacity;
+    transition: opacity 0.3s ease-in-out;
 
     .screen__footer--full & {
       opacity: 1;
+      transition-delay: 0.3s;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
     }
   }
 }
@@ -123,19 +154,33 @@
 
   @media (max-width: $tablet) and (orientation: portrait) {
     display: block;
+    will-change: opacity;
+    transition: opacity 0.3s ease-in-out 0.3s;
 
     .screen__footer--full & {
       opacity: 0;
       pointer-events: none;
+      transition-delay: 0s;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
     }
   }
 
   @media (max-width: $mobile) and (orientation: landscape) {
     display: block;
+    will-change: opacity;
+    transition: opacity 0.3s ease-in-out 0.3s;
 
     .screen__footer--full & {
       opacity: 0;
       pointer-events: none;
+      transition-delay: 0s;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
     }
   }
 
@@ -164,10 +209,17 @@
     display: block;
     opacity: 0;
     pointer-events: none;
+    will-change: opacity;
+    transition: opacity 0.3s ease-in-out;
 
     .screen__footer--full & {
       opacity: 1;
       pointer-events: auto;
+      transition-delay: 0.3s;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
     }
   }
 
@@ -175,10 +227,17 @@
     display: block;
     opacity: 0;
     pointer-events: none;
+    will-change: opacity;
+    transition: opacity 0.3s ease-in-out;
 
     .screen__footer--full & {
       opacity: 1;
       pointer-events: auto;
+      transition-delay: 0.3s;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
     }
   }
 
@@ -319,10 +378,6 @@
     background-size: auto calc(100vh - 13.8rem), 100% 25rem;
     background-position: top center, bottom center;
   }
-
-  .screen--intro.active ~ & {
-    transition-delay: 0s;
-  }
 }
 
 .screen--prizes {
@@ -335,6 +390,7 @@
   &::before {
     content: "";
     position: absolute;
+    z-index: 1;
     right: -8.5rem;
     bottom: 0;
     width: 32.7rem;
@@ -342,7 +398,6 @@
     background-image: url("../img/sonya.png");
     background-repeat: no-repeat;
     background-size: contain;
-    z-index: 1;
 
     @include retina {
       background-image: url("../img/sonya@2x.png");
@@ -377,34 +432,4 @@
 
 .screen--rules {
   background-color: $c-dark;
-}
-
-.screen--under-content{
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: $c-dark;
-  transform: translateY(100%);
-  will-change: transform;
-
-  &.screen--under-content--visible {
-    animation: backgroundAppear 0.4s ease-in backwards;
-
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-  }
-}
-
-
-@keyframes backgroundAppear {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
-  }
 }
