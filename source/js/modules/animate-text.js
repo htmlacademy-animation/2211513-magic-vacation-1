@@ -43,7 +43,7 @@ const targets = [
   },
 ];
 
-class AnimateTypography {
+export class AnimateTypography {
   constructor({node, duration, delayStep, wordDelay, classForActivate, selector}) {
     this._node = node;
     this._selector = selector;
