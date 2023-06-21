@@ -10,6 +10,7 @@ import social from './modules/social.js';
 import pageLoaded from './modules/page-loaded.js';
 import FullPageScroll from './modules/full-page-scroll';
 import animateText from './modules/animate-text';
+import animateSvg from "./modules/animate-svg"
 
 // init modules
 pageLoaded();
@@ -22,6 +23,7 @@ result();
 form();
 social();
 animateText();
+animateSvg();
 
 const fullPageScroll = new FullPageScroll();
 fullPageScroll.init();
