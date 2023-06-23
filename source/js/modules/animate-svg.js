@@ -6,6 +6,10 @@ const targets =
   {
     animateTarget: `secondaryAwardAppear`,
     parent: `cases`,
+  },
+  {
+    animateTarget: `additionalAwardAppear`,
+    parent: `codes`,
   }];
 
 class AnimateSvg {
