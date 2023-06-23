@@ -1,7 +1,12 @@
-const targets = [{
-  animateTarget: `primaryAwardAppear`,
-  parent: `journeys`
-}];
+const targets =
+  [{
+    animateTarget: `primaryAwardAppear`,
+    parent: `journeys`,
+  },
+  {
+    animateTarget: `secondaryAwardAppear`,
+    parent: `cases`,
+  }];
 
 class AnimateSvg {
   constructor({animateTarget, parent}) {
