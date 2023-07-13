@@ -1,20 +1,20 @@
-const targets =
-  [{
-    animateTarget: `primaryAwardAppear`,
-    parent: `journeys`,
-  },
-  {
-    animateTarget: `secondaryAwardAppear`,
-    parent: `cases`,
-  },
-  {
-    animateTarget: `additionalAwardAppear`,
-    parent: `codes`,
-  }];
+const targets = [{
+  animateTarget: `primaryAwardAppear`,
+  parent: `journeys`
+},
+{
+  animateTarget: `secondaryAwardAppear`,
+  parent: `cases`
+},
+{
+  animateTarget: `additionalAwardAppear`,
+  parent: `codes`
+}];
 
 class AnimateSvg {
-  constructor({animateTarget, parent}) {
+  constructor({animateTarget, screenName, parent}) {
     this._animateTarget = animateTarget;
+    this._screenName = screenName;
     this._parent = parent;
     this._isPlayed = false;
 
@@ -38,7 +38,7 @@ class AnimateSvg {
 
 export default () => {
   targets.forEach(({animateTarget, screenName, parent}) => {
-    const svgAnimation = new AnimateSvg({animateTarget, screenName, parent});
+    const svgAnimation = new SvgAwardAnimation({animateTarget, screenName, parent});
     svgAnimation.init();
   });
 };

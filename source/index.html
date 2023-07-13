@@ -975,16 +975,6 @@
                           begin="toCloudFadeIn.begin"
                           repeatCount="indefinite"
                         />
-                        <!--      <animate-->
-                        <!--        id="toCloudFadeOut"-->
-                        <!--        attributeType="CSS"-->
-                        <!--        attributeName="opacity"-->
-                        <!--        from="1"-->
-                        <!--        to="0"-->
-                        <!--        dur="0.3s"-->
-                        <!--        fill="freeze"-->
-                        <!--        begin="toCloudFadeIn.end + 3.2s"-->
-                        <!--      />-->
                       </g>
                     </g>
 
@@ -1236,9 +1226,9 @@
                     <img src="img/prize1.svg" alt="" />
                   </picture>
                 </div>
-                <p class="prizes__desc">
-                  <b>3</b>
-                  <span>загадочных путешествия</span>
+                <p class="prizes__desc js-prizes-desc">
+                  <b class="prizes__number">3</b>
+                  <span class="prizes__desc-text">загадочных путешествия</span>
                 </p>
               </li>
               <li class="prizes__item prizes__item--cases" id="cases">
@@ -1704,9 +1694,9 @@
                     <img src="img/prize2.svg" alt="" />
                   </picture>
                 </div>
-                <p class="prizes__desc">
-                  <b>7</b>
-                  <span>надежных чемоданов</span>
+                <p class="prizes__desc js-prizes-desc">
+                  <b class="prizes__number js-prizes-number">7</b>
+                  <span class="prizes__desc-text">надежных чемоданов</span>
                 </p>
               </li>
               <li class="prizes__item prizes__item--codes" id="codes">
@@ -1746,7 +1736,6 @@
                         fill="freeze"
                         begin="additionalAwardAppear.begin"
                       />
-
                       <g id="suitcaseTopSideClosed">
                         <path
                           d="M225.88,258.06H82.68a11.62,11.62,0,0,0-11.57,11.61v19.75H237.44V269.66a11.62,11.62,0,0,0-11.56-11.61"
@@ -2330,9 +2319,9 @@
                     <img src="img/prize3.svg" alt="" />
                   </picture>
                 </div>
-                <p class="prizes__desc">
-                  <b>900</b>
-                  <span>
+                <p class="prizes__desc js-prizes-desc">
+                  <b class="prizes__number js-prizes-number">900</b>
+                  <span class="prizes__desc-text">
                     промокодов на&nbsp;скидку 15%
                     <svg
                       width="10"
