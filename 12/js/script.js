@@ -10341,7 +10341,7 @@ class AnimateSvg {
 
 /* harmony default export */ __webpack_exports__["default"] = (() => {
   targets.forEach(({animateTarget, screenName, parent}) => {
-    const svgAnimation = new SvgAwardAnimation({animateTarget, screenName, parent});
+    const svgAnimation = new AnimateSvg({animateTarget, screenName, parent});
     svgAnimation.init();
   });
 });
