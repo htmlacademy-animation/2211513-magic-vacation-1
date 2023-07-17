@@ -38,7 +38,7 @@ class AnimateSvg {
 
 export default () => {
   targets.forEach(({animateTarget, screenName, parent}) => {
-    const svgAnimation = new SvgAwardAnimation({animateTarget, screenName, parent});
+    const svgAnimation = new AnimateSvg({animateTarget, screenName, parent});
     svgAnimation.init();
   });
 };
