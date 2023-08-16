@@ -10289,70 +10289,12 @@ const SCREEN_NAMES = {
 };
 
 
-
 /***/ }),
 
-/***/ "./source/js/modules/animate-svg.js":
-/*!******************************************!*\
-  !*** ./source/js/modules/animate-svg.js ***!
-  \******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-const targets = [{
-  animateTarget: `primaryAwardAppear`,
-  parent: `journeys`
-},
-{
-  animateTarget: `secondaryAwardAppear`,
-  parent: `cases`
-},
-{
-  animateTarget: `additionalAwardAppear`,
-  parent: `codes`
-}];
-
-class AnimateSvg {
-  constructor({animateTarget, screenName, parent}) {
-    this._animateTarget = animateTarget;
-    this._screenName = screenName;
-    this._parent = parent;
-    this._isPlayed = false;
-
-    this.beginAnimation = this.beginAnimation.bind(this);
-  }
-
-  beginAnimation() {
-    if (this._isPlayed) {
-      return;
-    }
-    const element = document.getElementById(this._animateTarget);
-    element.beginElement();
-    this._isPlayed = true;
-  }
-
-  init() {
-    const node = document.getElementById(this._parent);
-    node.addEventListener(`transitionstart`, this.beginAnimation);
-  }
-}
-
-/* harmony default export */ __webpack_exports__["default"] = (() => {
-  targets.forEach(({animateTarget, screenName, parent}) => {
-    const svgAnimation = new AnimateSvg({animateTarget, screenName, parent});
-    svgAnimation.init();
-  });
-});
-
-
-/***/ }),
-
-/***/ "./source/js/modules/animate-text.js":
-/*!*******************************************!*\
-  !*** ./source/js/modules/animate-text.js ***!
-  \*******************************************/
+/***/ "./source/js/modules/animate-typography.js":
+/*!*************************************************!*\
+  !*** ./source/js/modules/animate-typography.js ***!
+  \*************************************************/
 /*! exports provided: AnimateTypography, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -10367,24 +10309,19 @@ const targets = [
     selector: `.js-intro-title-row-top`,
     duration: 500,
     delayStep: 330,
-    wordDelay: 200
+    wordDelay: 300
   },
   {
     selector: `.js-intro-title-row-bottom`,
     duration: 500,
     delayStep: 330,
-    wordDelay: 460
+    wordDelay: 560
   },
   {
     selector: `.js-intro-date`,
     duration: 500,
     delayStep: 330,
     wordDelay: 1200
-  },
-  {
-    selector: `.js-story-title`,
-    duration: 500,
-    delayStep: 330,
   },
   {
     selector: `.js-prizes-title`,
@@ -10431,6 +10368,7 @@ class AnimateTypography {
 
   createElement(letter) {
     const span = document.createElement(`span`);
+    span.classList.add(`animated-text__char`);
     span.textContent = letter;
     span.style.transitionDuration = `${this._duration}ms`;
     span.style.transitionDelay = `${this._delayStep * Math.random() + this._wordDelay}ms`;
@@ -10448,7 +10386,7 @@ class AnimateTypography {
 
     document.body.addEventListener(_constants__WEBPACK_IMPORTED_MODULE_0__["SCREEN_ACTIVE_SET"], this.onToggleAnimationHandler);
 
-    const text = this._node.textContent.trim().split(/\s/g).filter((word)=> word !== ``);
+    const text = this._node.textContent.trim().split(` `).filter((word)=> word !== ``);
 
     const content = text.reduce((fragmentParent, word, wordIndex) => {
       const wordElement = Array.from(word).reduce((fragment, char, charIndex) => {
@@ -10501,82 +10439,212 @@ class AnimateTypography {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AnimationTickTimer", function() { return AnimationTickTimer; });
 class AnimationTickTimer {
-    constructor({animationTime, frameInterval}) {
-      this.animationTime = animationTime;
-      this.frameInterval = frameInterval;
+  constructor({animationTime, frameInterval}) {
+    this.animationTime = animationTime;
+    this.frameInterval = frameInterval;
+    this.now = null;
+    this.then = null;
+    this.elapsed = null;
+    this.timePassed = null;
+    this.animationRequest = null;
+    this.startTime = null;
+
+    this.onEndTimer = null;
+
+    this.startTimer = this.startTimer.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
+    this.endTimer = this.endTimer.bind(this);
+    this.tick = this.tick.bind(this);
+    this.draw = this.draw.bind(this);
+  }
+
+  draw() {}
+
+  tick() {
+    if (this.timePassed >= this.animationTime) {
+      this.endTimer();
+      return;
+    }
+
+    if (this.animationRequest) {
+      this.animationRequest = requestAnimationFrame(this.tick);
+    }
+
+    this.now = Date.now();
+    this.elapsed = this.now - this.then;
+
+    if (this.elapsed > this.frameInterval) {
+      this.then = this.now - (this.elapsed % this.frameInterval);
+      this.draw();
+    }
+  }
+
+  endTimer() {
+    this.stopTimer();
+    if (this.onEndTimer) {
+      this.onEndTimer();
+    }
+  }
+
+  resetTimer() {}
+
+  startTimer() {
+    this.then = Date.now();
+    this.startTime = Date.now();
+    this.animationRequest = requestAnimationFrame(this.tick);
+  }
+
+  stopTimer() {
+    if (this.animationRequest) {
+      cancelAnimationFrame(this.animationRequest);
+      this.animationRequest = null;
+      this.startTime = null;
       this.now = null;
       this.then = null;
       this.elapsed = null;
       this.timePassed = null;
-      this.animationRequest = null;
-      this.startTime = null;
-  
-      this.onEndTimer = null;
-  
-      this.startTimer = this.startTimer.bind(this);
-      this.stopTimer = this.stopTimer.bind(this);
-      this.endTimer = this.endTimer.bind(this);
-      this.tick = this.tick.bind(this);
-      this.draw = this.draw.bind(this);
     }
-  
-    draw() {}
-  
-    tick() {
-      if (this.timePassed >= this.animationTime) {
-        this.endTimer();
-        return;
-      }
-  
-      if (this.animationRequest) {
-        this.animationRequest = requestAnimationFrame(this.tick);
-      }
-  
-      this.now = Date.now();
-      this.elapsed = this.now - this.then;
-  
-      if (this.elapsed > this.frameInterval) {
-        this.then = this.now - (this.elapsed % this.frameInterval);
-        this.draw();
-      }
+
+    setTimeout(() => {
+      this.resetTimer();
+    }, 500);
+  }
+
+  init(onEndTimer) {
+    this.onEndTimer = onEndTimer;
+  }
+}
+
+
+/***/ }),
+
+/***/ "./source/js/modules/award-animation.js":
+/*!**********************************************!*\
+  !*** ./source/js/modules/award-animation.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _award_number_animation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./award-number-animation */ "./source/js/modules/award-number-animation.js");
+
+
+const targets = [{
+  svgAnimateTarget: `primaryAwardAppear`,
+  parent: `journeys`,
+  descriptionAppearDelay: 2500,
+},
+{
+  svgAnimateTarget: `secondaryAwardAppear`,
+  parent: `cases`,
+  descriptionAppearDelay: 1250,
+  animatedNumberValue: 7,
+  initialAnimatedNumberValue: 1,
+},
+{
+  svgAnimateTarget: `additionalAwardAppear`,
+  parent: `codes`,
+  descriptionAppearDelay: 1000,
+  animatedNumberValue: 900,
+  initialAnimatedNumberValue: 11,
+}];
+
+class AwardAnimation {
+  constructor({svgAnimateTarget, descriptionAppearDelay, animatedNumberValue, initialAnimatedNumberValue}) {
+    this._svgAnimateTarget = svgAnimateTarget;
+    this._descriptionAppearDelay = descriptionAppearDelay;
+    this._isPlayed = false;
+    this._awardEl = null;
+    this.numberAnimation = new _award_number_animation__WEBPACK_IMPORTED_MODULE_0__["AwardNumberAnimation"]({animatedNumberValue, initialAnimatedNumberValue});
+
+    this.beginAnimation = this.beginAnimation.bind(this);
+    this.onEndAnimation = this.onEndAnimation.bind(this);
+  }
+
+  onEndAnimation() {
+    this._awardEl.classList.add(`animated`);
+  }
+
+  beginAnimation() {
+    if (this._isPlayed) {
+      return;
     }
-  
-    endTimer() {
-      this.stopTimer();
-      if (this.onEndTimer) {
-        this.onEndTimer();
-      }
+    const element = document.getElementById(this._svgAnimateTarget);
+    element.beginElement();
+    const description = this._awardEl.querySelector(`.js-prizes-desc`);
+    const isPortrait = window.innerWidth < window.innerHeight;
+    const isTablet = window.innerWidth < 1024;
+    const delay = isTablet && isPortrait ? 0 : this._descriptionAppearDelay;
+
+    setTimeout(() => {
+      description.classList.add(`animated`);
+      this.numberAnimation.startTimer();
+    }, delay);
+
+    this._isPlayed = true;
+  }
+
+  init(parent) {
+    this._awardEl = document.getElementById(parent);
+    this._awardEl.addEventListener(`transitionstart`, this.beginAnimation);
+    const numberEl = this._awardEl.querySelector(`.js-prizes-number`);
+    this.numberAnimation.init(this.onEndAnimation, numberEl);
+  }
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (() => {
+  targets.forEach(({svgAnimateTarget, parent, descriptionAppearDelay, animatedNumberValue, initialAnimatedNumberValue}) => {
+    const svgAnimation = new AwardAnimation({svgAnimateTarget, descriptionAppearDelay, animatedNumberValue, initialAnimatedNumberValue});
+    svgAnimation.init(parent);
+  });
+});
+
+
+/***/ }),
+
+/***/ "./source/js/modules/award-number-animation.js":
+/*!*****************************************************!*\
+  !*** ./source/js/modules/award-number-animation.js ***!
+  \*****************************************************/
+/*! exports provided: AwardNumberAnimation */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AwardNumberAnimation", function() { return AwardNumberAnimation; });
+/* harmony import */ var _animation_tick_timer__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./animation-tick-timer */ "./source/js/modules/animation-tick-timer.js");
+
+
+class AwardNumberAnimation extends _animation_tick_timer__WEBPACK_IMPORTED_MODULE_0__["AnimationTickTimer"] {
+  constructor({animatedNumberValue, initialAnimatedNumberValue}) {
+    super({animationTime: 700, frameInterval: 100});
+    this.animatedNumberValue = animatedNumberValue;
+    this.initialAnimatedNumberValue = initialAnimatedNumberValue;
+    this.element = null;
+
+    this.draw = this.draw.bind(this);
+  }
+
+  draw() {
+    if (!this.element) {
+      return;
     }
-  
-    resetTimer() {}
-  
-    startTimer() {
-      this.then = Date.now();
-      this.startTime = Date.now();
-      this.animationRequest = requestAnimationFrame(this.tick);
-    }
-  
-    stopTimer() {
-      if (this.animationRequest) {
-        cancelAnimationFrame(this.animationRequest);
-        this.animationRequest = null;
-        this.startTime = null;
-        this.now = null;
-        this.then = null;
-        this.elapsed = null;
-        this.timePassed = null;
-      }
-  
-      setTimeout(() => {
-        this.resetTimer();
-      }, 500);
-    }
-  
-    init(onEndTimer) {
-      this.onEndTimer = onEndTimer;
+
+    this.timePassed = this.then - this.startTime;
+
+    this.element.innerHTML = Math.floor(this.animatedNumberValue / this.animationTime * this.timePassed);
+  }
+
+  init(onEndTimer, element) {
+    super.init(onEndTimer);
+    if (element) {
+      this.element = element;
+      this.element.innerHTML = this.initialAnimatedNumberValue;
     }
   }
-  
+}
+
 
 /***/ }),
 
@@ -11178,7 +11246,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var swiper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! swiper */ "./node_modules/swiper/js/swiper.esm.bundle.js");
-/* harmony import */ var _animate_text__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./animate-text */ "./source/js/modules/animate-text.js");
+/* harmony import */ var _animate_typography__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./animate-typography */ "./source/js/modules/animate-typography.js");
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constants */ "./source/js/constants.js");
 
 
@@ -11191,7 +11259,7 @@ __webpack_require__.r(__webpack_exports__);
   sliderContainer.style.backgroundImage = `url("img/slide1.jpg"), linear-gradient(180deg, rgba(83, 65, 118, 0) 0%, #523E75 16.85%)`;
 
   const titleNode = document.querySelector(`.js-story-title`);
-  const animateTitle = new _animate_text__WEBPACK_IMPORTED_MODULE_1__["AnimateTypography"]({selector: `.js-story-title`, node: titleNode, duration: 500, delayStep: 330, classForActivate: `active`});
+  const animateTitle = new _animate_typography__WEBPACK_IMPORTED_MODULE_1__["AnimateTypography"]({selector: `.js-story-title`, node: titleNode, duration: 500, delayStep: 330, classForActivate: `active`});
   animateTitle.init();
 
   const toggleTitleAnimation = (slideIndex) => {
@@ -11374,11 +11442,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_chat_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/chat.js */ "./source/js/modules/chat.js");
 /* harmony import */ var _modules_form_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/form.js */ "./source/js/modules/form.js");
 /* harmony import */ var _modules_social_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/social.js */ "./source/js/modules/social.js");
-/* harmony import */ var _modules_page_loaded_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/page-loaded.js */ "./source/js/modules/page-loaded.js");
+/* harmony import */ var _modules_page_loaded__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/page-loaded */ "./source/js/modules/page-loaded.js");
 /* harmony import */ var _modules_full_page_scroll__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/full-page-scroll */ "./source/js/modules/full-page-scroll.js");
-/* harmony import */ var _modules_animate_text__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/animate-text */ "./source/js/modules/animate-text.js");
-/* harmony import */ var _modules_animate_svg__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/animate-svg */ "./source/js/modules/animate-svg.js");
-/* harmony import */ var _modules_game_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/game.js */ "./source/js/modules/game.js");
+/* harmony import */ var _modules_animate_typography__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/animate-typography */ "./source/js/modules/animate-typography.js");
+/* harmony import */ var _modules_award_animation__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/award-animation */ "./source/js/modules/award-animation.js");
+/* harmony import */ var _modules_game__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/game */ "./source/js/modules/game.js");
 // modules
 
 
@@ -11394,7 +11462,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 // init modules
-Object(_modules_page_loaded_js__WEBPACK_IMPORTED_MODULE_7__["default"])();
 Object(_modules_mobile_height_adjust_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
 Object(_modules_slider_js__WEBPACK_IMPORTED_MODULE_1__["default"])();
 Object(_modules_menu_js__WEBPACK_IMPORTED_MODULE_2__["default"])();
@@ -11402,14 +11469,16 @@ Object(_modules_footer_js__WEBPACK_IMPORTED_MODULE_3__["default"])();
 Object(_modules_chat_js__WEBPACK_IMPORTED_MODULE_4__["default"])();
 Object(_modules_form_js__WEBPACK_IMPORTED_MODULE_5__["default"])();
 Object(_modules_social_js__WEBPACK_IMPORTED_MODULE_6__["default"])();
-Object(_modules_animate_text__WEBPACK_IMPORTED_MODULE_9__["default"])();
-Object(_modules_animate_svg__WEBPACK_IMPORTED_MODULE_10__["default"])();
+Object(_modules_animate_typography__WEBPACK_IMPORTED_MODULE_9__["default"])();
+Object(_modules_award_animation__WEBPACK_IMPORTED_MODULE_10__["default"])();
 
-const game = new _modules_game_js__WEBPACK_IMPORTED_MODULE_11__["Game"]();
+const game = new _modules_game__WEBPACK_IMPORTED_MODULE_11__["Game"]();
 game.init();
 
 const fullPageScroll = new _modules_full_page_scroll__WEBPACK_IMPORTED_MODULE_8__["default"]();
 fullPageScroll.init();
+Object(_modules_page_loaded__WEBPACK_IMPORTED_MODULE_7__["default"])();
+
 
 
 /***/ }),
