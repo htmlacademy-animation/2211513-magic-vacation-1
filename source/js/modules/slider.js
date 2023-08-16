@@ -1,5 +1,5 @@
 import Swiper from "swiper";
-import {AnimateTypography} from "./animate-text";
+import {AnimateTypography} from "./animate-typography";
 import {SCREEN_ACTIVE_SET, THEME_CLASS_NAMES} from '../constants';
 
 export default () => {

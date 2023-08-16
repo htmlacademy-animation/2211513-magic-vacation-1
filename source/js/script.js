@@ -8,7 +8,7 @@ import form from './modules/form.js';
 import social from './modules/social.js';
 import pageLoaded from './modules/pageLoaded.js';
 import FullPageScroll from './modules/full-page-scroll';
-import animateTypography from './modules/animate-text';
+import animateTypography from './modules/animate-typography';
 import awardAnimation from './modules/award-animation';
 import {Game} from './modules/game';
 
