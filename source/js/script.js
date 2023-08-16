@@ -9,7 +9,7 @@ import social from './modules/social.js';
 import pageLoaded from './modules/page-loaded.js';
 import FullPageScroll from './modules/full-page-scroll';
 import animateText from './modules/animate-text';
-import animateSvg from "./modules/animate-svg"
+import awardAnimation from './modules/award-animation';
 import {Game} from './modules/game.js';
 
 // init modules
@@ -22,7 +22,7 @@ chat();
 form();
 social();
 animateText();
-animateSvg();
+awardAnimation();
 
 const game = new Game();
 game.init();
