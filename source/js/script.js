@@ -6,14 +6,13 @@ import footer from './modules/footer.js';
 import chat from './modules/chat.js';
 import form from './modules/form.js';
 import social from './modules/social.js';
-import pageLoaded from './modules/page-loaded.js';
+import pageLoaded from './modules/pageLoaded.js';
 import FullPageScroll from './modules/full-page-scroll';
-import animateText from './modules/animate-text';
+import animateTypography from './modules/animate-typography';
 import awardAnimation from './modules/award-animation';
-import {Game} from './modules/game.js';
+import {Game} from './modules/game';
 
 // init modules
-pageLoaded();
 mobileHeight();
 slider();
 menu();
@@ -21,7 +20,7 @@ footer();
 chat();
 form();
 social();
-animateText();
+animateTypography();
 awardAnimation();
 
 const game = new Game();
@@ -29,3 +28,5 @@ game.init();
 
 const fullPageScroll = new FullPageScroll();
 fullPageScroll.init();
+pageLoaded();
+
