@@ -71,7 +71,7 @@ export default class FullPageScroll {
   changeVisibilityDisplay() {
     if (this.previosScreen !== this.activeScreen) {
       document.body.dataset.previosActiveScreen = this.screenElements[this.previosScreen].id;
-      this.screenElements[this.previosScreen].classList.add(`screen--hidden`);
+      this.screenElements[this.previosScreen].classList.add(`screen--leave`);
     }
     document.body.dataset.activeScreen = this.screenElements[this.activeScreen].id;
     this.screenElements.forEach((screen) => {
@@ -82,9 +82,9 @@ export default class FullPageScroll {
     setTimeout(() => {
       this.screenElements[this.activeScreen].classList.add(`active`);
       this.screenElements[this.activeScreen].classList.add(`visited`);
-      this.screenElements[this.previosScreen].classList.remove(`screen--hidden`);
+      this.screenElements[this.previosScreen].classList.remove(`screen--leave`);
       this.emitChangeDisplayEvent(SCREEN_ACTIVE_SET);
-    }, 400);
+    }, 350);
   }
 
   changeActiveMenuItem() {

@@ -5,20 +5,20 @@ const targets = [{
   parent: `journeys`,
   descriptionAppearDelay: 2500,
 },
-{
+  {
   svgAnimateTarget: `secondaryAwardAppear`,
-  parent: `cases`,
-  descriptionAppearDelay: 1250,
-  animatedNumberValue: 7,
-  initialAnimatedNumberValue: 1,
-},
-{
-  svgAnimateTarget: `additionalAwardAppear`,
-  parent: `codes`,
-  descriptionAppearDelay: 1000,
-  animatedNumberValue: 900,
-  initialAnimatedNumberValue: 11,
-}];
+    parent: `cases`,
+    descriptionAppearDelay: 1250,
+    animatedNumberValue: 7,
+    initialAnimatedNumberValue: 1,
+  },
+  {
+    svgAnimateTarget: `additionalAwardAppear`,
+    parent: `codes`,
+    descriptionAppearDelay: 1000,
+    animatedNumberValue: 900,
+    initialAnimatedNumberValue: 11,
+  }];
 
 class AwardAnimation {
   constructor({svgAnimateTarget, descriptionAppearDelay, animatedNumberValue, initialAnimatedNumberValue}) {
