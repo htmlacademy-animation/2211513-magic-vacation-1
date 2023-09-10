@@ -7,13 +7,12 @@ import chat from './modules/chat.js';
 import form from './modules/form.js';
 import social from './modules/social.js';
 import pageLoaded from './modules/page-loaded.js';
-import FullPageScroll from './modules/full-page-scroll';
-import animateText from './modules/animate-text';
-import animateSvg from "./modules/animate-svg"
+import FullPageScroll from './modules/full-page-scroll.js';
+import animateTypography from './modules/animate-typography.js';
+import awardAnimation from './modules/award-animation.js';
 import {Game} from './modules/game.js';
 
 // init modules
-pageLoaded();
 mobileHeight();
 slider();
 menu();
@@ -21,11 +20,13 @@ footer();
 chat();
 form();
 social();
-animateText();
-animateSvg();
+animateTypography();
+awardAnimation();
 
 const game = new Game();
 game.init();
 
 const fullPageScroll = new FullPageScroll();
 fullPageScroll.init();
+pageLoaded();
+

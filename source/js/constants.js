@@ -18,4 +18,3 @@ export const SCREEN_NAMES = {
   RESULT_SUITCASE: `result2`,
   RESULT_NEGATIVE: `result3`,
 };
-

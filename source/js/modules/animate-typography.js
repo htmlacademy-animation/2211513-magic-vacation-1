@@ -5,24 +5,19 @@ const targets = [
     selector: `.js-intro-title-row-top`,
     duration: 500,
     delayStep: 330,
-    wordDelay: 200
+    wordDelay: 300
   },
   {
     selector: `.js-intro-title-row-bottom`,
     duration: 500,
     delayStep: 330,
-    wordDelay: 460
+    wordDelay: 560
   },
   {
     selector: `.js-intro-date`,
     duration: 500,
     delayStep: 330,
     wordDelay: 1200
-  },
-  {
-    selector: `.js-story-title`,
-    duration: 500,
-    delayStep: 330,
   },
   {
     selector: `.js-prizes-title`,
@@ -69,6 +64,7 @@ export class AnimateTypography {
 
   createElement(letter) {
     const span = document.createElement(`span`);
+    span.classList.add(`animated-text__char`);
     span.textContent = letter;
     span.style.transitionDuration = `${this._duration}ms`;
     span.style.transitionDelay = `${this._delayStep * Math.random() + this._wordDelay}ms`;
@@ -86,7 +82,7 @@ export class AnimateTypography {
 
     document.body.addEventListener(SCREEN_ACTIVE_SET, this.onToggleAnimationHandler);
 
-    const text = this._node.textContent.trim().split(/\s/g).filter((word)=> word !== ``);
+    const text = this._node.textContent.trim().split(` `).filter((word)=> word !== ``);
 
     const content = text.reduce((fragmentParent, word, wordIndex) => {
       const wordElement = Array.from(word).reduce((fragment, char, charIndex) => {
