@@ -1,17 +1,25 @@
-import {SCREEN_ACTIVE_SET, SCREEN_CHANGED_EVENT_TYPE, SCREEN_NAMES} from '../constants';
-import {GameTimer} from './game-timer';
-import {Scene2DSeaCalf} from './scene-2d-sea-calf';
+import {
+  SCREEN_ACTIVE_SET,
+  SCREEN_CHANGED_EVENT_TYPE,
+  SCREEN_NAMES,
+} from "../constants";
+import { GameTimer } from "./game-timer";
+import { Scene2DSeaCalf } from "./scene-2d-sea-calf";
+import { Scene2DCrocodile } from "./scene-2d-crocodile";
 
 export class Game {
   constructor() {
     this.activeGameScreen = SCREEN_NAMES.GAME;
     this.resultScreens = document.querySelectorAll(`.screen--result`);
     this.resultScreenTitles = document.querySelectorAll(`[data-parent-screen]`);
-    this.titleFailRestart = document.getElementById(`resetNegativeTitleOpacity`);
+    this.titleFailRestart = document.getElementById(
+      `resetNegativeTitleOpacity`
+    );
     this.screenGameEl = document.getElementById(`${SCREEN_NAMES.GAME}`);
 
     this.timer = new GameTimer();
     this.scene2DSeaCalf = new Scene2DSeaCalf();
+    this.scene2DCrocodile = new Scene2DCrocodile();
 
     this.showResultEls = document.querySelectorAll(`.js-show-result`);
     this.playBtn = document.querySelector(`.js-play`);
@@ -30,13 +38,17 @@ export class Game {
 
   setCurrentResultScreen(targetId) {
     this.activeGameScreen = targetId;
-    const targetScreenEl = [].slice.call(this.resultScreens).find(function (el) {
-      return el.getAttribute(`id`) === targetId;
-    });
+    const targetScreenEl = [].slice
+      .call(this.resultScreens)
+      .find(function (el) {
+        return el.getAttribute(`id`) === targetId;
+      });
 
-    let titleTargetEl = [].slice.call(this.resultScreenTitles).find(function (el) {
-      return el.getAttribute(`data-parent-screen`) === targetId;
-    });
+    let titleTargetEl = [].slice
+      .call(this.resultScreenTitles)
+      .find(function (el) {
+        return el.getAttribute(`data-parent-screen`) === targetId;
+      });
 
     if (targetScreenEl) {
       this.screenGameEl.classList.remove(`screen--show`);
@@ -55,13 +67,17 @@ export class Game {
     if (this.activeGameScreen === `result`) {
       this.scene2DSeaCalf.start();
     }
+
+    if (this.activeGameScreen === `result3`) {
+      this.scene2DCrocodile.start();
+    }
   }
 
   emitChangeDisplayEvent(screenEl) {
     const event = new CustomEvent(SCREEN_ACTIVE_SET, {
       detail: {
-        'screenElement': screenEl
-      }
+        screenElement: screenEl,
+      },
     });
 
     setTimeout(() => {
@@ -77,6 +93,7 @@ export class Game {
 
   showFailScreen() {
     this.setCurrentResultScreen(SCREEN_NAMES.RESULT_NEGATIVE);
+    this.scene2DCrocodile.start();
   }
 
   hideScreens() {
@@ -95,6 +112,7 @@ export class Game {
     document.getElementById(`messages`).innerHTML = ``;
     document.getElementById(`message-field`).focus();
     this.titleFailRestart.beginElement();
+    this.scene2DCrocodile.stop();
   }
 
   showResultByButtonClick(evt) {
@@ -115,8 +133,8 @@ export class Game {
     }, 1400);
   }
 
-  checkScreen({detail}) {
-    const {screenName} = detail;
+  checkScreen({ detail }) {
+    const { screenName } = detail;
 
     const isGamePage = screenName === SCREEN_NAMES.GAME;
     const isPlayScreen = this.activeGameScreen === SCREEN_NAMES.GAME;
@@ -144,7 +162,10 @@ export class Game {
     }
 
     for (let i = 0; i < this.showResultEls.length; i++) {
-      this.showResultEls[i].addEventListener(`click`, this.showResultByButtonClick);
+      this.showResultEls[i].addEventListener(
+        `click`,
+        this.showResultByButtonClick
+      );
     }
   }
 }
