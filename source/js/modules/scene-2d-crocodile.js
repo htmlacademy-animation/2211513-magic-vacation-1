@@ -13,17 +13,6 @@ const IMAGES_URLS = Object.freeze({
 });
 
 const OBJECTS = Object.freeze({
-  // key: {
-  //   imageId: `key`,
-  //   x: 50,
-  //   y: 57,
-  //   size: 39,
-  //   opacity: 0,
-  //   transforms: {
-  //     scaleX: 0.9,
-  //     scaleY: 0.9
-  //   }
-  // },
   crocodile: {
     imageId: `crocodile`,
     x: 49,
@@ -32,7 +21,7 @@ const OBJECTS = Object.freeze({
     transforms: {
       translateY: -25,
       translateX: 45,
-    },
+    }
   },
   snowflake: {
     imageId: `snowflake`,
@@ -44,7 +33,7 @@ const OBJECTS = Object.freeze({
       scaleY: 0,
       translateY: 5,
       translateX: -15,
-    },
+    }
   },
   flamingo: {
     imageId: `flamingo`,
@@ -56,7 +45,7 @@ const OBJECTS = Object.freeze({
       scaleY: 0,
       translateY: 20,
       translateX: 35,
-    },
+    }
   },
   watermelon: {
     imageId: `watermelon`,
@@ -68,7 +57,7 @@ const OBJECTS = Object.freeze({
       scaleY: 0,
       translateY: -5,
       translateX: 45,
-    },
+    }
   },
   leaf: {
     imageId: `leaf`,
@@ -80,7 +69,7 @@ const OBJECTS = Object.freeze({
       scaleY: 0,
       translateY: 25,
       translateX: -20,
-    },
+    }
   },
   saturn: {
     imageId: `saturn`,
@@ -92,18 +81,8 @@ const OBJECTS = Object.freeze({
       scaleY: 0,
       translateY: -15,
       translateX: -30,
-    },
+    }
   },
-  // tearDrop: {
-  //   imageId: `tearDrop`,
-  //   x: 46,
-  //   y: 70,
-  //   size: 8,
-  //   transforms: {
-  //     scaleX: 0,
-  //     scaleY: 0,
-  //   }
-  // },
 });
 
 const LOCALS = Object.freeze({
@@ -116,7 +95,7 @@ const LOCALS = Object.freeze({
     translateY: 0,
     opacity: 0,
     deltaCenterY: 0,
-  },
+  }
 });
 
 export class Scene2DCrocodile extends Scene2D {
@@ -147,15 +126,13 @@ export class Scene2DCrocodile extends Scene2D {
   }
 
   initAnimations() {
-    this.animations.push(
-      new Animation2d({
-        func: () => {
-          this.drawScene();
-        },
-        duration: `infinite`,
-        fps: 60,
-      })
-    );
+    this.animations.push(new Animation2d({
+      func: () => {
+        this.drawScene();
+      },
+      duration: `infinite`,
+      fps: 60
+    }));
 
     this.initKeyAnimations();
     this.initCrocodileAnimations();
@@ -177,221 +154,193 @@ export class Scene2DCrocodile extends Scene2D {
         scale: LOCALS.tearDrop.scale,
         translateY: LOCALS.tearDrop.translateY,
         opacity: LOCALS.tearDrop.opacity,
-        deltaCenterY: LOCALS.tearDrop.deltaCenterY,
-      },
+        deltaCenterY: LOCALS.tearDrop.deltaCenterY
+      }
     };
   }
 
   initCrocodileAnimations() {
-    this.animations.push(
-      new Animation2d({
-        func: (progress) => {
-          const progressReversed = 1 - progress;
-          this.objects.crocodile.transforms.translateY = -25 * progressReversed;
-          this.objects.crocodile.transforms.translateX = 45 * progressReversed;
-        },
-        duration: 600,
-        delay: 1350,
-        easing: _.easeOutQuad,
-      })
-    );
+    this.animations.push(new Animation2d({
+      func: (progress) => {
+        const progressReversed = 1 - progress;
+        this.objects.crocodile.transforms.translateY = -25 * progressReversed;
+        this.objects.crocodile.transforms.translateX = 45 * progressReversed;
+      },
+      duration: 600,
+      delay: 1350,
+      easing: _.easeOutQuad
+    }));
   }
 
   initSnowflakeAnimations() {
-    this.animations.push(
-      new Animation2d({
-        func: (progress) => {
-          const progressReversed = 1 - progress;
-          this.objects.snowflake.transforms.translateY = 5 * progressReversed;
-          this.objects.snowflake.transforms.translateX = -15 * progressReversed;
-          this.objects.snowflake.transforms.scaleX = progress;
-          this.objects.snowflake.transforms.scaleY = progress;
-        },
-        duration: 600,
-        delay: 500,
-        easing: _.easeOutQuad,
-      })
-    );
+    this.animations.push(new Animation2d({
+      func: (progress) => {
+        const progressReversed = 1 - progress;
+        this.objects.snowflake.transforms.translateY = 5 * progressReversed;
+        this.objects.snowflake.transforms.translateX = -15 * progressReversed;
+        this.objects.snowflake.transforms.scaleX = progress;
+        this.objects.snowflake.transforms.scaleY = progress;
+      },
+      duration: 600,
+      delay: 500,
+      easing: _.easeOutQuad
+    }));
 
-    this.animations.push(
-      new Animation2d({
-        func: (progress) => {
-          this.objects.snowflake.transforms.translateY = 70 * progress;
-        },
-        duration: 600,
-        delay: 1200,
-        easing: _.easeInQuad,
-      })
-    );
+    this.animations.push(new Animation2d({
+      func: (progress) => {
+        this.objects.snowflake.transforms.translateY = 70 * progress;
+      },
+      duration: 600,
+      delay: 1200,
+      easing: _.easeInQuad
+    }));
   }
 
   initWatermelonAnimations() {
-    this.animations.push(
-      new Animation2d({
-        func: (progress) => {
-          const progressReversed = 1 - progress;
-          this.objects.watermelon.transforms.translateY = -5 * progressReversed;
-          this.objects.watermelon.transforms.translateX = 45 * progressReversed;
-          this.objects.watermelon.transforms.scaleX = progress;
-          this.objects.watermelon.transforms.scaleY = progress;
-        },
-        duration: 600,
-        delay: 500,
-        easing: _.easeOutQuad,
-      })
-    );
-    this.animations.push(
-      new Animation2d({
-        func: (progress) => {
-          this.objects.watermelon.transforms.translateY = 70 * progress;
-        },
-        duration: 600,
-        delay: 1200,
-        easing: _.easeInQuad,
-      })
-    );
+    this.animations.push(new Animation2d({
+      func: (progress) => {
+        const progressReversed = 1 - progress;
+        this.objects.watermelon.transforms.translateY = -5 * progressReversed;
+        this.objects.watermelon.transforms.translateX = 45 * progressReversed;
+        this.objects.watermelon.transforms.scaleX = progress;
+        this.objects.watermelon.transforms.scaleY = progress;
+      },
+      duration: 600,
+      delay: 500,
+      easing: _.easeOutQuad
+    }));
+    this.animations.push(new Animation2d({
+      func: (progress) => {
+        this.objects.watermelon.transforms.translateY = 70 * progress;
+      },
+      duration: 600,
+      delay: 1200,
+      easing: _.easeInQuad
+    }));
   }
 
   initLeafAnimations() {
-    this.animations.push(
-      new Animation2d({
-        func: (progress) => {
-          const progressReversed = 1 - progress;
-          this.objects.leaf.transforms.translateY = 20 * progressReversed;
-          this.objects.leaf.transforms.translateX = -15 * progressReversed;
-          this.objects.leaf.transforms.scaleX = progress;
-          this.objects.leaf.transforms.scaleY = progress;
-        },
-        duration: 500,
-        delay: 500,
-        easing: _.easeOutQuad,
-      })
-    );
-    this.animations.push(
-      new Animation2d({
-        func: (progress) => {
-          this.objects.leaf.transforms.translateY = 70 * progress;
-        },
-        duration: 600,
-        delay: 1000,
-        easing: _.easeInQuad,
-      })
-    );
+    this.animations.push(new Animation2d({
+      func: (progress) => {
+        const progressReversed = 1 - progress;
+        this.objects.leaf.transforms.translateY = 20 * progressReversed;
+        this.objects.leaf.transforms.translateX = -15 * progressReversed;
+        this.objects.leaf.transforms.scaleX = progress;
+        this.objects.leaf.transforms.scaleY = progress;
+      },
+      duration: 500,
+      delay: 500,
+      easing: _.easeOutQuad
+    }));
+    this.animations.push(new Animation2d({
+      func: (progress) => {
+        this.objects.leaf.transforms.translateY = 70 * progress;
+      },
+      duration: 600,
+      delay: 1000,
+      easing: _.easeInQuad
+    }));
   }
 
   initSaturnAnimations() {
-    this.animations.push(
-      new Animation2d({
-        func: (progress) => {
-          const progressReversed = 1 - progress;
-          this.objects.saturn.transforms.translateY = -15 * progressReversed;
-          this.objects.saturn.transforms.translateX = -30 * progressReversed;
-          this.objects.saturn.transforms.scaleX = progress;
-          this.objects.saturn.transforms.scaleY = progress;
-        },
-        duration: 600,
-        delay: 500,
-        easing: _.easeOutQuad,
-      })
-    );
+    this.animations.push(new Animation2d({
+      func: (progress) => {
+        const progressReversed = 1 - progress;
+        this.objects.saturn.transforms.translateY = -15 * progressReversed;
+        this.objects.saturn.transforms.translateX = -30 * progressReversed;
+        this.objects.saturn.transforms.scaleX = progress;
+        this.objects.saturn.transforms.scaleY = progress;
+      },
+      duration: 600,
+      delay: 500,
+      easing: _.easeOutQuad
+    }));
 
-    this.animations.push(
-      new Animation2d({
-        func: (progress) => {
-          this.objects.saturn.transforms.translateY = 70 * progress;
-        },
-        duration: 600,
-        delay: 1250,
-        easing: _.easeInQuad,
-      })
-    );
+    this.animations.push(new Animation2d({
+      func: (progress) => {
+        this.objects.saturn.transforms.translateY = 70 * progress;
+      },
+      duration: 600,
+      delay: 1250,
+      easing: _.easeInQuad
+    }));
   }
 
   initFlamingoAnimations() {
-    this.animations.push(
-      new Animation2d({
-        func: (progress) => {
-          const progressReversed = 1 - progress;
-          this.objects.flamingo.transforms.translateY = 20 * progressReversed;
-          this.objects.flamingo.transforms.translateX = 35 * progressReversed;
-          this.objects.flamingo.transforms.scaleX = progress;
-          this.objects.flamingo.transforms.scaleY = progress;
-        },
-        duration: 500,
-        delay: 500,
-        easing: _.easeOutQuad,
-      })
-    );
+    this.animations.push(new Animation2d({
+      func: (progress) => {
+        const progressReversed = 1 - progress;
+        this.objects.flamingo.transforms.translateY = 20 * progressReversed;
+        this.objects.flamingo.transforms.translateX = 35 * progressReversed;
+        this.objects.flamingo.transforms.scaleX = progress;
+        this.objects.flamingo.transforms.scaleY = progress;
+      },
+      duration: 500,
+      delay: 500,
+      easing: _.easeOutQuad
+    }));
 
-    this.animations.push(
-      new Animation2d({
-        func: (progress) => {
-          this.objects.flamingo.transforms.translateY = 70 * progress;
-        },
-        duration: 600,
-        delay: 1100,
-        easing: _.easeInQuad,
-      })
-    );
+    this.animations.push(new Animation2d({
+      func: (progress) => {
+        this.objects.flamingo.transforms.translateY = 70 * progress;
+      },
+      duration: 600,
+      delay: 1100,
+      easing: _.easeInQuad
+    }));
   }
 
   initTearDropAnimations() {
     let prevValue = 0;
-    this.animations.push(
-      new Animation2d({
-        func: (progress, details) => {
-          const oldPrevValue = prevValue;
+    this.animations.push(new Animation2d({
+      func: (progress, details) => {
+        const oldPrevValue = prevValue;
 
-          const period = (details.currentTime - details.startTime) / 1000;
-          const value = Math.sin(2.5 * period);
-          prevValue = value;
+        const period = (details.currentTime - details.startTime) / 1000;
+        const value = Math.sin(2.5 * period);
+        prevValue = value;
 
-          if (oldPrevValue < value) {
-            this.locals.tearDrop.translateY = 0;
-            this.locals.tearDrop.opacity = 1;
-            this.locals.tearDrop.deltaCenterY = 0;
-            if (value >= 0) {
-              this.locals.tearDrop.scale = Math.abs(value);
-            } else {
-              this.locals.tearDrop.opacity = 0;
-            }
+        if (oldPrevValue < value) {
+          this.locals.tearDrop.translateY = 0;
+          this.locals.tearDrop.opacity = 1;
+          this.locals.tearDrop.deltaCenterY = 0;
+          if (value >= 0) {
+            this.locals.tearDrop.scale = Math.abs(value);
           } else {
-            const progressReversed = 1 - Math.abs(value);
-            if (value <= 0) {
-              this.locals.tearDrop.scale = progressReversed;
-              this.locals.tearDrop.opacity = progressReversed;
-              this.locals.tearDrop.deltaCenterY = 4;
-            } else {
-              this.locals.tearDrop.deltaCenterY = 0;
-              this.locals.tearDrop.translateY = 5 * progressReversed;
-            }
+            this.locals.tearDrop.opacity = 0;
           }
-        },
-        duration: `infinite`,
-        delay: 1900,
-        easing: _.easeInOutQuad,
-      })
-    );
+        } else {
+          const progressReversed = 1 - Math.abs(value);
+          if (value <= 0) {
+            this.locals.tearDrop.scale = progressReversed;
+            this.locals.tearDrop.opacity = progressReversed;
+            this.locals.tearDrop.deltaCenterY = 4;
+          } else {
+            this.locals.tearDrop.deltaCenterY = 0;
+            this.locals.tearDrop.translateY = 5 * progressReversed;
+          }
+        }
+      },
+      duration: `infinite`,
+      delay: 1900,
+      easing: _.easeInOutQuad
+    }));
   }
 
   initKeyAnimations() {
-    this.animations.push(
-      new Animation2d({
-        func: (progress) => {
-          this.locals.key.opacity = progress;
-          this.locals.key.scale = 0.8 + progress / 5;
-        },
-        duration: 200,
-        delay: 500,
-        easing: _.easeLinear,
-      })
-    );
+    this.animations.push(new Animation2d({
+      func: (progress) => {
+        this.locals.key.opacity = progress;
+        this.locals.key.scale = 0.8 + (progress / 5);
+      },
+      duration: 200,
+      delay: 500,
+      easing: _.easeLinear
+    }));
   }
 
   drawKey() {
-    const {
-      key: { scale, opacity },
-    } = this.locals;
+    const {key: {scale, opacity}} = this.locals;
 
     if (opacity === 0) {
       return;
@@ -423,13 +372,7 @@ export class Scene2DCrocodile extends Scene2D {
     const s = this.size / 100;
     this.ctx.beginPath();
     this.ctx.moveTo(50 * s, 37 * s);
-    this.ctx.arc(
-      50 * s,
-      48 * s,
-      11 * s,
-      (Math.PI / 180) * -90,
-      (Math.PI / 180) * 50
-    );
+    this.ctx.arc(50 * s, 48 * s, 11 * s, (Math.PI / 180) * -90, (Math.PI / 180) * 50);
     this.ctx.lineTo(61 * s, 77 * s);
     this.ctx.lineTo(100 * s, 77 * s);
     this.ctx.lineTo(100 * s, 31 * s);
@@ -443,37 +386,18 @@ export class Scene2DCrocodile extends Scene2D {
   }
 
   drawTearDrop() {
-    const {
-      tearDrop: { scale, translateY, opacity, deltaCenterY },
-    } = this.locals;
+    const {tearDrop: {scale, translateY, opacity, deltaCenterY}} = this.locals;
     this.ctx.save();
     const s = this.size / 100;
-    this.ctx.setTransform(
-      scale,
-      0,
-      0,
-      scale,
-      47 * s,
-      (65 + translateY + deltaCenterY) * s
-    );
+    this.ctx.setTransform(scale, 0, 0, scale, 47 * s, (65 + translateY + deltaCenterY) * s);
     this.ctx.beginPath();
     // this.ctx.moveTo(47 * s, 65 * s);
     // this.ctx.quadraticCurveTo(52 * s, 72 * s, 47 * s, 73 * s);
     // this.ctx.quadraticCurveTo(42 * s, 72 * s, 47 * s, 65 * s);
     // this.ctx.arc(47 * s, 70.5 * s, 2.5 * s, 0, Math.PI * 2);
     this.ctx.moveTo(0, -deltaCenterY * s);
-    this.ctx.quadraticCurveTo(
-      5 * s,
-      (7 - deltaCenterY) * s,
-      0,
-      (8 - deltaCenterY) * s
-    );
-    this.ctx.quadraticCurveTo(
-      -5 * s,
-      (7 - deltaCenterY) * s,
-      0,
-      -deltaCenterY * s
-    );
+    this.ctx.quadraticCurveTo(5 * s, (7 - deltaCenterY) * s, 0, (8 - deltaCenterY) * s);
+    this.ctx.quadraticCurveTo(-5 * s, (7 - deltaCenterY) * s, 0, -deltaCenterY * s);
     this.ctx.arc(0, (5.5 - deltaCenterY) * s, 2.5 * s, 0, Math.PI * 2);
     this.ctx.closePath();
     this.ctx.globalAlpha = opacity;
