@@ -194,11 +194,11 @@ export class Scene2D {
     }
 
     this.ctx.drawImage(
-      image,
-      x,
-      y,
-      width,
-      height
+        image,
+        x,
+        y,
+        width,
+        height
     );
 
     if (isContextTransforming) {
@@ -224,8 +224,8 @@ export class Scene2D {
         }
 
         this.drawImage(
-          this.images[object.imageId],
-          object
+            this.images[object.imageId],
+            object
         );
 
         if (object.after && typeof object.after === `function`) {

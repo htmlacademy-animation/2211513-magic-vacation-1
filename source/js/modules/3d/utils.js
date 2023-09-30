@@ -2,9 +2,9 @@ import * as THREE from 'three';
 
 
 export const getRawShaderMaterial = (uniforms) => new THREE.RawShaderMaterial(
-  {
-    uniforms,
-    vertexShader: `
+    {
+      uniforms,
+      vertexShader: `
       uniform mat4 projectionMatrix;
       uniform mat4 modelMatrix;
       uniform mat4 viewMatrix;
@@ -17,7 +17,7 @@ export const getRawShaderMaterial = (uniforms) => new THREE.RawShaderMaterial(
         gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4( position, 1.0 );
       }
     `,
-    fragmentShader: `
+      fragmentShader: `
       precision mediump float;
       uniform sampler2D map;
       varying vec2 vUv;
@@ -26,4 +26,4 @@ export const getRawShaderMaterial = (uniforms) => new THREE.RawShaderMaterial(
         gl_FragColor = texel;
       }
     `,
-  });
+    });

@@ -1,5 +1,5 @@
-import { Scene2D } from "./scene-2d";
-import { Animation2d } from "./animation-2d";
+import {Scene2D} from "./scene-2d";
+import {Animation2d} from "./animation-2d";
 import _ from "../../utils";
 
 const IMAGES_URLS = Object.freeze({
