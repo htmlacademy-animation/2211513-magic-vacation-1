@@ -1,6 +1,6 @@
 import {Animation2d} from './animation-2d';
 import {Scene2D} from './scene-2d.js';
-import _ from '../utils';
+import _ from '../../utils';
 
 
 const IMAGES_URLS = Object.freeze({
@@ -308,27 +308,27 @@ export class Scene2DSeaCalf extends Scene2D {
 
     this.ctx.beginPath();
     this.ctx.arc(
-      b.centerX * s,
-      b.centerY * s,
-      b.radius * s,
-      Math.PI / 2,
-      Math.PI * 3 / 2
+        b.centerX * s,
+        b.centerY * s,
+        b.radius * s,
+        Math.PI / 2,
+        Math.PI * 3 / 2
     );
     this.ctx.bezierCurveTo(
-      (b.centerX + 10) * s,
-      (b.centerY - b.radius) * s,
-      (b.endX - b.deltasLength * Math.sin(angle)) * s,
-      (b.endY + b.deltasLength * Math.cos(angle)) * s,
-      b.endX * s,
-      b.endY * s
+        (b.centerX + 10) * s,
+        (b.centerY - b.radius) * s,
+        (b.endX - b.deltasLength * Math.sin(angle)) * s,
+        (b.endY + b.deltasLength * Math.cos(angle)) * s,
+        b.endX * s,
+        b.endY * s
     );
     this.ctx.bezierCurveTo(
-      (b.endX - b.deltasLength * Math.sin(angle)) * s,
-      (b.endY + b.deltasLength * Math.cos(angle)) * s,
-      (b.centerX + 10) * s,
-      (b.centerY + b.radius) * s,
-      b.centerX * s,
-      (b.centerY + b.radius) * s
+        (b.endX - b.deltasLength * Math.sin(angle)) * s,
+        (b.endY + b.deltasLength * Math.cos(angle)) * s,
+        (b.centerX + 10) * s,
+        (b.centerY + b.radius) * s,
+        b.centerX * s,
+        (b.centerY + b.radius) * s
     );
 
     this.ctx.fill();

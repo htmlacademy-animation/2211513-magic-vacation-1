@@ -11,7 +11,7 @@ import FullPageScroll from './modules/full-page-scroll.js';
 import animateTypography from './modules/animate-typography.js';
 import awardAnimation from './modules/award-animation.js';
 import {Game} from './modules/game.js';
-import {scene3dStory} from './modules/scene-3d-story.js';
+import {scene3dStory} from './modules/3d/scene-3d-story.js';
 
 // init modules
 mobileHeight();
