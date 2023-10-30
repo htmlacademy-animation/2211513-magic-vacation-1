@@ -4,8 +4,9 @@ import vertexShader from './vertex-shader.glsl';
 import fragmentShader from './fragment-shader.glsl';
 
 export const getRawShaderMaterial = (uniforms) => new THREE.RawShaderMaterial(
-  {
-    uniforms,
-    vertexShader,
-    fragmentShader,
-  });
+    {
+      uniforms,
+      vertexShader,
+      fragmentShader,
+      transparent: true,
+    });
