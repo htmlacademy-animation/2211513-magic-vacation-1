@@ -1,5 +1,7 @@
-export class Scene3d {
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
+import * as THREE from 'three';
 
+export class Scene3d {
   constructor() {
     this.resize = this.resize.bind(this);
   }
@@ -15,6 +17,15 @@ export class Scene3d {
       return;
     }
     targetNode.appendChild(renderer.domElement);
+  }
+
+  addDeveloperHelpers({camera, canvas, scene}) {
+    const controls = new OrbitControls(camera, canvas);
+    controls.target.set(0, 5, 0);
+    controls.update();
+    const helpers = new THREE.Group();
+    helpers.add(new THREE.AxesHelper(5000));
+    scene.add(helpers);
   }
 
   construct() {
