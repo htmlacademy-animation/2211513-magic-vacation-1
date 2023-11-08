@@ -17,4 +17,4 @@ class SnowmanAndCompassRoom extends THREE.Group {
   }
 }
 
-export const showmanAndCompassRoom = new SnowmanAndCompassRoom();
+export const snowmanAndCompassRoom = new SnowmanAndCompassRoom();
