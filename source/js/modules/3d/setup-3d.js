@@ -3,7 +3,7 @@ import * as THREE from 'three';
 export const setup3d = ({
   initialWidth = 100,
   initialHeight = 100,
-  far = 5500,
+  far = 15500,
   fov = 45,
 }) => {
   //
