@@ -1,5 +1,5 @@
 import {SCREEN_NAMES, STORY_SLIDE_NAMES} from '../../../constants';
-import {dogAndSuitcaseRoom, pyramidAndCactusRoom, showmanAndCompassRoom, aiSonyaRoom, intro} from '../rooms';
+import {dogAndSuitcaseRoom, pyramidAndCactusRoom, snowmanAndCompassRoom, aiSonyaRoom, intro} from '../rooms';
 import {BUBBLES} from './bubbles';
 
 export const SCENES = Object.freeze({
@@ -23,7 +23,7 @@ export const SCENES = Object.freeze({
   [STORY_SLIDE_NAMES.SNOWMAN_AND_COMPASS]: {
     image: `img/module-5/scenes-textures/scene-3.png`,
     hasHueShift: false,
-    room: showmanAndCompassRoom,
+    room: snowmanAndCompassRoom,
   },
   [STORY_SLIDE_NAMES.AI_SONYA]: {
     image: `img/module-5/scenes-textures/scene-4.png`,
