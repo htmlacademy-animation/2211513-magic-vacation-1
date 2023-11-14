@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {snowMan} from './snowman';
-import {road} from './road';
 import {BaseSceneItem} from '../baseSceneItem';
+import {road} from './road/road';
 class SnowmanAndCompassRoom extends BaseSceneItem {
   constructor() {
     super();
