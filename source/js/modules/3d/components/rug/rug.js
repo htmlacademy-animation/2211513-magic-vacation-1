@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {LatheObject} from '../latheObject';
-import {RugMaterial} from './rugMaterial';
+import {RugMaterial} from './rug-material';
 import {COLORS_MAP} from '../../config/colors';
 
 export class Rug extends LatheObject {
