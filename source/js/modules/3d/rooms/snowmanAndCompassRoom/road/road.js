@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import {LatheObject} from '../../latheObject';
+import {LatheObject} from '../../../components/latheObject';
 import {COLORS_MAP} from '../../../config/colors';
-import {RoadMaterial} from './RoadMaterial';
+import {RoadMaterial} from './road-material';
 
 class Road extends LatheObject {
   constructor() {
@@ -26,8 +26,8 @@ class Road extends LatheObject {
     const material = new RoadMaterial({mainColor: COLORS_MAP.Grey, lineColor: COLORS_MAP.White});
     const geometry = this.createLatheGeometry(this.data);
     const mesh = new THREE.Mesh(
-      geometry,
-      material);
+        geometry,
+        material);
     this.addAxisToNode(mesh);
     this.add(mesh);
   }

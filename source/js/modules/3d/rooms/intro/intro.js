@@ -1,4 +1,4 @@
-import {BaseSceneItem} from '../baseSceneItem';
+import {BaseSceneItem} from '../../components/baseSceneItem';
 import {COLORS_MAP} from '../../config/colors';
 import {MATERIAL_REFLECTIVITY} from '../../config/material-reflectivity';
 import {behindKeyhole} from './behindKeyhole';
