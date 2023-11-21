@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import {CAMERA_POSITION} from '../consts';
 
-
 export const LIGHTS = [
   {
     type: `DirectionalLight`,
@@ -37,4 +36,8 @@ export const LIGHTS = [
     decay: 2.0,
     distance: 2500,
   },
+  {
+    type: `AmbientLight`,
+    color: 0x404040,
+  }
 ];
