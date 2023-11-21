@@ -3,6 +3,7 @@ import {BaseObject} from '../../components/baseObject';
 import {COLORS_MAP} from '../../config/colors';
 import {MATERIAL_REFLECTIVITY} from '../../config/material-reflectivity';
 
+
 class Snowman extends BaseObject {
   constructor() {
     super();
@@ -39,28 +40,36 @@ class Snowman extends BaseObject {
 
   getSmallBallMesh() {
     const sphere = new THREE.SphereGeometry(
-        this.smallBall.radius,
-        this.smallBall.segments,
-        this.smallBall.segments
+      this.smallBall.radius,
+      this.smallBall.segments,
+      this.smallBall.segments
     );
     const material = this.createMaterial(this.smallBall.material);
-    return new THREE.Mesh(
-        sphere,
-        material
+    const mesh = new THREE.Mesh(
+      sphere,
+      material
     );
+
+    mesh.castShadow = true;
+
+    return mesh;
   }
 
   getNoseMesh() {
     const cone = new THREE.ConeGeometry(
-        this.nose.radius,
-        this.nose.height,
-        this.nose.radialSegments
+      this.nose.radius,
+      this.nose.height,
+      this.nose.radialSegments
     );
     const material = this.createMaterial(this.nose.material);
-    return new THREE.Mesh(
-        cone,
-        material
+    const mesh = new THREE.Mesh(
+      cone,
+      material
     );
+
+    mesh.castShadow = true;
+
+    return mesh;
   }
 
   addHead() {
@@ -80,17 +89,16 @@ class Snowman extends BaseObject {
 
   addBigBall() {
     const sphere = new THREE.SphereGeometry(
-        this.bigBall.radius,
-        this.bigBall.segments,
-        this.bigBall.segments
+      this.bigBall.radius,
+      this.bigBall.segments,
+      this.bigBall.segments
     );
     const material = this.createMaterial(this.bigBall.material);
     const mesh = new THREE.Mesh(
-        sphere,
-        material
+      sphere,
+      material
     );
-
-    this.addAxisToNode(mesh);
+    mesh.castShadow = true;
 
     this.add(mesh);
   }

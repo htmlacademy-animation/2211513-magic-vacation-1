@@ -27,9 +27,9 @@ export class Rug extends LatheObject {
     const material = new RugMaterial({firstColor: this.data.firstColor, secondColor: this.data.secondColor});
     const geometry = this.createLatheGeometry(this.data);
     const mesh = new THREE.Mesh(
-        geometry,
-        material);
-    this.addAxisToNode(mesh);
+      geometry,
+      material);
+    mesh.receiveShadow = true;
     this.add(mesh);
   }
 }

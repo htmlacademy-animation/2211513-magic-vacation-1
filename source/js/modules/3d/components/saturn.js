@@ -55,18 +55,19 @@ export class Saturn extends BaseObject {
     const planet = new THREE.Group();
     const sphere = new THREE.SphereGeometry(this.planet.radius, this.planet.segments, this.planet.segments);
     const sphereMesh = new THREE.Mesh(
-        sphere,
-        this.createMaterial(this.planet.material)
+      sphere,
+      this.createMaterial(this.planet.material)
     );
-    this.addAxisToNode(sphereMesh);
+
+    sphereMesh.castShadow = true;
 
     const ring = new LatheObject().createLatheGeometry(this.ring);
     const ringMesh = new THREE.Mesh(
-        ring,
-        this.createMaterial(this.ring.material)
+      ring,
+      this.createMaterial(this.ring.material)
     );
+    ringMesh.castShadow = true;
     ringMesh.rotation.copy(new THREE.Euler(20 * THREE.Math.DEG2RAD, 0, 18 * THREE.Math.DEG2RAD), `XYZ`);
-    this.addAxisToNode(ringMesh);
 
     planet.add(sphereMesh, ringMesh);
 
@@ -76,25 +77,25 @@ export class Saturn extends BaseObject {
   createMoon() {
     const sphere = new THREE.SphereGeometry(this.moon.radius, this.moon.segments, this.moon.segments);
     const sphereMesh = new THREE.Mesh(
-        sphere,
-        this.createMaterial(this.moon.material)
+      sphere,
+      this.createMaterial(this.moon.material)
     );
-    this.addAxisToNode(sphereMesh);
+    sphereMesh.castShadow = true;
     return sphereMesh;
   }
 
   createWire() {
     const wire = new THREE.CylinderGeometry(
-        this.wire.radius,
-        this.wire.radius,
-        this.wire.height,
-        this.wire.segments
+      this.wire.radius,
+      this.wire.radius,
+      this.wire.height,
+      this.wire.segments
     );
     const wireMesh = new THREE.Mesh(
-        wire,
-        this.createMaterial(this.wire.material)
+      wire,
+      this.createMaterial(this.wire.material)
     );
-    this.addAxisToNode(wireMesh);
+    wireMesh.castShadow = true;
     return wireMesh;
   }
 
@@ -111,4 +112,3 @@ export class Saturn extends BaseObject {
     }
   }
 }
-

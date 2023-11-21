@@ -1,8 +1,20 @@
 import * as THREE from 'three';
 
+
 export class BaseObject extends THREE.Group {
   constructor() {
     super();
+  }
+
+  addShadow({castShadow, receiveShadow}, child = this) {
+
+    if (receiveShadow) {
+      child.receiveShadow = true;
+    }
+
+    if (castShadow) {
+      child.castShadow = true;
+    }
   }
 
   createMaterial({color, ...rest}) {
@@ -24,8 +36,8 @@ export class BaseObject extends THREE.Group {
     if (rotate) {
       const {x = 0, y = 0, z = 0} = rotate;
       this.rotation.copy(
-          new THREE.Euler(x * THREE.Math.DEG2RAD, y * THREE.Math.DEG2RAD, z * THREE.Math.DEG2RAD),
-          `XYZ`
+        new THREE.Euler(x * THREE.Math.DEG2RAD, y * THREE.Math.DEG2RAD, z * THREE.Math.DEG2RAD),
+        `XYZ`
       );
     }
 
