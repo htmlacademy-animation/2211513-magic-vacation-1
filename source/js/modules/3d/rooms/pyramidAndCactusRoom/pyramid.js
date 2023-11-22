@@ -24,13 +24,13 @@ class Pyramid extends BaseObject {
   addObject() {
     const material = this.createMaterial(this.data.material);
     const cone = new THREE.ConeBufferGeometry(
-        this.data.radius,
-        this.data.height,
-        this.data.radialSegments
+      this.data.radius,
+      this.data.height,
+      this.data.radialSegments
     );
     const mesh = new THREE.Mesh(
-        cone,
-        material);
+      cone,
+      material);
     this.addAxisToNode(mesh);
     this.add(mesh);
   }
