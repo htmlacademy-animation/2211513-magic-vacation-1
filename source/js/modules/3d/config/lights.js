@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import {CAMERA_POSITION} from '../consts';
+
 export const LIGHTS = [
   {
     type: `DirectionalLight`,
@@ -9,6 +10,8 @@ export const LIGHTS = [
       x: 0,
       y: -CAMERA_POSITION * Math.tan(15 * THREE.Math.DEG2RAD),
       z: 0,
+      // y: CAMERA_POSITION * Math.tan(-15 * THREE.Math.DEG2RAD),
+      // z: CAMERA_POSITION,
     }
   },
   {

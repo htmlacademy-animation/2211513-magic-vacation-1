@@ -98,10 +98,13 @@ const _ = Object.freeze({
   easeInElastic,
   easeOutElastic,
   easeInQuad,
-  easeInOutBack,
   easeOutQuad,
   easeInOutQuad,
+  easeInOutBack
 });
 
 
 export default _;
+
+// Squash and stretch in 3d
+// scale.x = scale.z = 1 / Math.sqrt(scale.y)
