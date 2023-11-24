@@ -1,6 +1,6 @@
 import {BaseObject} from '../../components/baseObject';
 import * as THREE from 'three';
-import {getConeRadius} from '../../utils';
+import {degreesToRadians, getConeRadius} from '../../utils';
 import {COLORS_MAP} from '../../config/colors';
 import {MATERIAL_REFLECTIVITY} from '../../config/material-reflectivity';
 
@@ -80,54 +80,54 @@ class Lantern extends BaseObject {
 
     // подставка
     const lightBoxBottom = new THREE.BoxGeometry(
-        this.lightBoxBottom.width,
-        this.lightBoxBottom.height,
-        this.lightBoxBottom.width
+      this.lightBoxBottom.width,
+      this.lightBoxBottom.height,
+      this.lightBoxBottom.width
     );
     const lightBoxBottomMesh = new THREE.Mesh(
-        lightBoxBottom,
-        this.createMaterial(this.lightBoxBottom.material)
+      lightBoxBottom,
+      this.createMaterial(this.lightBoxBottom.material)
     );
     lightBoxBottomMesh.castShadow = true;
 
     // светильник
     const box = new THREE.CylinderGeometry(
-        getConeRadius(this.lightBox.widthTop),
-        getConeRadius(this.lightBox.widthBottom),
-        this.lightBox.height,
-        this.lightBox.radialSegments
+      getConeRadius(this.lightBox.widthTop),
+      getConeRadius(this.lightBox.widthBottom),
+      this.lightBox.height,
+      this.lightBox.radialSegments
     );
     const boxMesh = new THREE.Mesh(
-        box,
-        this.createMaterial(this.lightBox.material)
+      box,
+      this.createMaterial(this.lightBox.material)
     );
     boxMesh.castShadow = true;
 
     boxMesh.position.set(0, this.lightBox.height / 2 + this.lightBoxBottom.height / 2, 0);
 
     boxMesh.rotation.copy(
-        new THREE.Euler(0, 45 * THREE.Math.DEG2RAD, 0),
-        `XYZ`
+      new THREE.Euler(0, degreesToRadians(45), 0),
+      `XYZ`
     );
 
     // крышка
     const lightBoxTop = new THREE.CylinderGeometry(
-        getConeRadius(this.lightBoxTop.widthTop),
-        getConeRadius(this.lightBoxTop.widthBottom),
-        this.lightBoxTop.height,
-        this.lightBoxTop.radialSegments
+      getConeRadius(this.lightBoxTop.widthTop),
+      getConeRadius(this.lightBoxTop.widthBottom),
+      this.lightBoxTop.height,
+      this.lightBoxTop.radialSegments
     );
     const lightBoxTopMesh = new THREE.Mesh(
-        lightBoxTop,
-        this.createMaterial(this.lightBoxTop.material)
+      lightBoxTop,
+      this.createMaterial(this.lightBoxTop.material)
     );
     lightBoxTopMesh.castShadow = true;
 
     lightBoxTopMesh.position.set(0, this.lightBox.height + this.lightBoxBottom.height, 0);
 
     lightBoxTopMesh.rotation.copy(
-        new THREE.Euler(0, 45 * THREE.Math.DEG2RAD, 0),
-        `XYZ`
+      new THREE.Euler(0, degreesToRadians(45), 0),
+      `XYZ`
     );
 
     lightBox.add(lightBoxBottomMesh, boxMesh, lightBoxTopMesh);
@@ -140,42 +140,42 @@ class Lantern extends BaseObject {
 
     // палка
     const column = new THREE.CylinderGeometry(
-        this.column.radius,
-        this.column.radius,
-        this.column.height,
-        this.column.radialSegments
+      this.column.radius,
+      this.column.radius,
+      this.column.height,
+      this.column.radialSegments
     );
     const columnMesh = new THREE.Mesh(
-        column,
-        this.createMaterial(this.column.material)
+      column,
+      this.createMaterial(this.column.material)
     );
     columnMesh.castShadow = true;
 
     // ножка
     const foot = new THREE.CylinderGeometry(
-        this.foot.radius,
-        this.foot.radius,
-        this.foot.height,
-        this.foot.radialSegments
+      this.foot.radius,
+      this.foot.radius,
+      this.foot.height,
+      this.foot.radialSegments
     );
     const footMesh = new THREE.Mesh(
-        foot,
-        this.createMaterial(this.foot.material)
+      foot,
+      this.createMaterial(this.foot.material)
     );
     footMesh.castShadow = true;
 
     const halfSphere = new THREE.SphereGeometry(
-        this.sphere.radius,
-        this.sphere.segments,
-        this.sphere.segments,
-        Math.PI * 2.0,
-        Math.PI * 2.0,
-        0,
-        Math.PI * 0.5
+      this.sphere.radius,
+      this.sphere.segments,
+      this.sphere.segments,
+      Math.PI * 2.0,
+      Math.PI * 2.0,
+      0,
+      Math.PI * 0.5
     );
     const halfSphereMesh = new THREE.Mesh(
-        halfSphere,
-        this.createMaterial(this.sphere.material)
+      halfSphere,
+      this.createMaterial(this.sphere.material)
     );
     halfSphereMesh.castShadow = true;
 
