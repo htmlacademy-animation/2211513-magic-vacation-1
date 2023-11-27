@@ -88,6 +88,9 @@ function easeInOutBack(x) {
 const easeOutQuad = makeEaseOut(easeInQuad);
 const easeInOutQuad = makeEaseInOut(easeInQuad);
 
+export function easeInOutSine(x) {
+  return -(Math.cos(Math.PI * x) - 1) / 2;
+}
 
 const _ = Object.freeze({
   easeLinear,
@@ -100,7 +103,8 @@ const _ = Object.freeze({
   easeInQuad,
   easeOutQuad,
   easeInOutQuad,
-  easeInOutBack
+  easeInOutBack,
+  easeInOutSine
 });
 
 
