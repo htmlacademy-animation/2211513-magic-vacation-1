@@ -15,6 +15,7 @@ import {Apartment} from './rooms/apartment';
 import {Intro} from './rooms';
 import {degreesToRadians} from './utils';
 
+
 class Scene3dStory extends Scene3d {
   constructor() {
     super();
@@ -270,8 +271,7 @@ class Scene3dStory extends Scene3d {
     const positionY = 700;
     this.camera.position.set(0, positionY, positionZ);
     this.orbitControls.target.set(0,
-      positionY - positionZ * Math.tan(degreesToRadians(15)),
-      0);
+      positionY - positionZ * Math.tan(degreesToRadians(15)), 0);
     this.orbitControls.update();
     const apartment = new Apartment(this.svgObjectsLoader);
     // apartment.rotateY(-1 * Math.PI / 4);
@@ -283,8 +283,8 @@ class Scene3dStory extends Scene3d {
 
   initScreenObjects() {
     this.svgObjectsLoader.createMap().then(() => {
-      // this.addIntro();
-      this.addApartment();
+      this.addIntro();
+      // this.addApartment();
       // eslint-disable-next-line no-console
     }).catch((e) => console.warn(e));
   }
