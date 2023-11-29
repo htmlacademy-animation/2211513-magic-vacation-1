@@ -3,6 +3,7 @@ import {GLTFLoader} from "three/examples/jsm/loaders/GLTFLoader";
 import {BaseObject} from './baseObject';
 // import {GUI} from 'dat.gui';
 
+
 export class ModelObjectCreator extends BaseObject {
   constructor(objectWithSettings, callbackAfterCreate) {
     super();
@@ -69,19 +70,9 @@ export class ModelObjectCreator extends BaseObject {
   create() {
     const {name} = this.figure;
     this.addName(name);
-    // const gui = new GUI();
     this.loadModel(async (mesh) => {
       mesh.name = `mesh_${this.figure.name}`;
       await this.addGroupSandwich(mesh);
-      // if (this.figure.name === `watermelon`) {
-      //   const elem = document.querySelector(`.dg.ac`);
-      //   elem.style.zIndex = 1000;
-      //   const folder = gui.addFolder(`figure ${this.figure.name}`);
-      //   folder.add(this.rotation, `x`, 0, Math.PI * 2, 0.01);
-      //   folder.add(this.rotation, `y`, 0, Math.PI * 2, 0.01);
-      //   folder.add(this.rotation, `z`, 0, Math.PI * 2, 0.01);
-      //   folder.open();
-      // }
 
       if (this.figure.placement) {
         this.place(this.figure.placement, this.inner);
