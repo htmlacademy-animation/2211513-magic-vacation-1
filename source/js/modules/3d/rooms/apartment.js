@@ -132,9 +132,11 @@ export class Apartment extends BaseSceneItem {
     }));
   }
 
+
   create() {
     this.addRooms();
     this.addModel(this.suitcase, this.addSuitcaseAnimation);
+    this.rotateY(-1 * Math.PI / 4);
 
     // todo добавит старт анимации при загрузке страницы после синхронизации двух сцен
     setTimeout(() => {
