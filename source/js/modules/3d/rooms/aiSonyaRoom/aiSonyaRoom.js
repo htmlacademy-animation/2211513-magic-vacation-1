@@ -8,6 +8,7 @@ import {COLORS_MAP} from '../../config/colors';
 import {Animation} from '../../../animation';
 import {degreesToRadians} from '../../utils';
 
+
 class AiSonyaRoom extends Room {
   constructor() {
     super();
@@ -96,11 +97,16 @@ class AiSonyaRoom extends Room {
     };
     const saturn = new Saturn({isShadowed: true});
     saturn.place(placement);
+    const ring = saturn.getRing();
+    ring.rotation.x = degreesToRadians(-15);
+    ring.rotation.y = degreesToRadians(-30);
+    ring.rotation.z = degreesToRadians(-23);
     this.addObject(saturn);
   }
 
   addRug() {
     const rug = new Rug(true);
+    rug.position.z = -20;
     this.addObject(rug);
   }
 

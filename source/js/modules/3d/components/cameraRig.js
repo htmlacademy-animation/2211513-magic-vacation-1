@@ -5,6 +5,7 @@ import {degreesToRadians} from '../utils';
 import {Animation} from '../../animation';
 import {easeInOutSine} from '../../../utils';
 
+
 export class CameraRig extends THREE.Group {
   constructor() {
     super();
@@ -34,6 +35,14 @@ export class CameraRig extends THREE.Group {
       return 700;
     }
     return 1500;
+  }
+
+  getMinDepth() {
+    return 2150;
+  }
+
+  getMaxDepth() {
+    return 4750;
   }
 
   getCameraConfig(screenName) {
@@ -78,6 +87,16 @@ export class CameraRig extends THREE.Group {
     this.camaraAnimation.start();
   }
 
+  emitChangeDepth() {
+    const event = new CustomEvent(`cameraDepthChange`, {
+      detail: {
+        depth: this.depth
+      }
+    });
+
+    document.body.dispatchEvent(event);
+  }
+
   // Добавляем setter и getter для внутренних параметров
   // Устанавливаем флаги
   set horizonIncline(value) {
@@ -111,6 +130,7 @@ export class CameraRig extends THREE.Group {
     }
     this._depth = value;
     this._depthChanged = true;
+    this.emitChangeDepth();
   }
 
   get depth() {
@@ -132,6 +152,10 @@ export class CameraRig extends THREE.Group {
 
   addObjectToCameraNull(object) {
     this.camNull.add(object);
+  }
+
+  addObjectToRotationAxis(object) {
+    this.rotationAxis.add(object);
   }
 
   // Пишем метод, который обновляет состояние конструкции на основании текущих значений параметров
