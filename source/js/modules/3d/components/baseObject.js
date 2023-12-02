@@ -1,7 +1,5 @@
 import * as THREE from 'three';
 import {degreesToRadians} from '../utils';
-
-
 export class BaseObject extends THREE.Group {
   constructor() {
     super();
@@ -11,6 +9,9 @@ export class BaseObject extends THREE.Group {
     this.inner = new THREE.Group();
     // mesh вкладываем в inner
     this.mesh = new THREE.Group();
+
+    this.animations = [];
+    this.isRunningAnimations = false;
   }
 
   addName(name) {
@@ -93,5 +94,19 @@ export class BaseObject extends THREE.Group {
     const axis = new THREE.AxesHelper(axisSize);
     axis.position.copy(center);
     node.add(axis);
+  }
+
+  startAnimations() {
+    this.isRunningAnimations = true;
+    this.animations.forEach((anim) => {
+      anim.start();
+    });
+  }
+
+  stopAnimations() {
+    this.isRunningAnimations = false;
+    this.animations.forEach((anim) => {
+      anim.stop();
+    });
   }
 }

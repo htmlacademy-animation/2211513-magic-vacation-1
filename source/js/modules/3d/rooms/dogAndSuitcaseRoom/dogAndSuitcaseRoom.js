@@ -5,10 +5,9 @@ import {MATERIAL_REFLECTIVITY} from '../../config/material-reflectivity';
 import {Room} from '../room';
 import * as THREE from 'three';
 import bezierEasing from '../../../../bezier-easing';
-
-
 import {Animation} from '../../../animation';
 import {degreesToRadians} from '../../utils';
+
 
 class DogAndSuitcaseRoom extends Room {
   constructor() {
@@ -96,6 +95,7 @@ class DogAndSuitcaseRoom extends Room {
 
   addRug() {
     const rug = new Rug();
+    rug.position.z = -20;
     this.addObject(rug);
   }
 
