@@ -3,7 +3,6 @@ import * as THREE from 'three';
 import {COLORS_MAP} from '../../config/colors';
 import {MATERIAL_REFLECTIVITY} from '../../config/material-reflectivity';
 
-
 class BehindKeyhole extends BaseObject {
   constructor() {
     super();
@@ -44,8 +43,8 @@ class BehindKeyhole extends BaseObject {
 
     let opacity;
 
-    const fullOpacityBreakpoint = -3700;
-    const noOpacityBreakpoint = -3000;
+    const fullOpacityBreakpoint = -2200;
+    const noOpacityBreakpoint = -1800;
 
     if (depth < fullOpacityBreakpoint) {
       opacity = 1;
