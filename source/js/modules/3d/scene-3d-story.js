@@ -14,6 +14,7 @@ import {Apartment} from './rooms/apartment';
 import {Intro} from './rooms';
 import {CameraRig} from './components/cameraRig';
 import {Suitcase} from './components/suitcase';
+import {isMobile} from '../../isMobile';
 
 class Scene3dStory extends Scene3d {
   constructor() {
@@ -28,6 +29,7 @@ class Scene3dStory extends Scene3d {
     this.updateSlide = this.updateSlide.bind(this);
     this.render = this.render.bind(this);
     this.resize = this.resize.bind(this);
+    this.isMobile = isMobile();
   }
 
   getSceneIndex(name) {
@@ -215,7 +217,7 @@ class Scene3dStory extends Scene3d {
           const lightUnit = new THREE.PointLight(lightColor, intensity, distance, decay);
           lightUnit.position.set(...Object.values(position));
           helper.add(new THREE.PointLightHelper(lightUnit, 10));
-          if (castShadow) {
+          if (castShadow && !this.isMobile) {
             lightUnit.castShadow = true;
             // lightUnit.shadow.mapSize.width = this.width;
             // lightUnit.shadow.mapSize.height = this.height;
