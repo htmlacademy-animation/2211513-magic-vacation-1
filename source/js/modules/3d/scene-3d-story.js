@@ -5,16 +5,17 @@ import {SCREEN_NAMES, STORY_SLIDE_NAMES} from '../../constants';
 import {getRawShaderMaterial} from './shaders';
 import {Animation} from '../animation';
 import {IMAGE_WIDTH} from './consts';
-import {SvgObjectsLoader} from './svg';
-import {SVG_SHAPES} from './config/svg-shapes';
 import {LIGHTS} from './config/lights';
-import {SCENE_INDEX_BY_NAME, SCENES} from './config/scenes';
+import {SCENE_INDEX_BY_NAME} from './config/scenes';
 import {BUBBLES} from './config/bubbles';
 import {Apartment} from './rooms/apartment';
 import {Intro} from './rooms';
 import {CameraRig} from './components/cameraRig';
 import {Suitcase} from './components/suitcase';
 import {isMobile} from '../../isMobile';
+import {loadingManager} from './helpers/loadingManager';
+import FullPageScroll from '../full-page-scroll';
+import {objectStore} from './helpers/objectStore';
 
 class Scene3dStory extends Scene3d {
   constructor() {
@@ -24,12 +25,14 @@ class Scene3dStory extends Scene3d {
     this.resizeInProgress = false;
     this.animations = [];
     this.materials = {};
-    this.svgObjectsLoader = new SvgObjectsLoader(SVG_SHAPES);
     this.updateScreen = this.updateScreen.bind(this);
     this.updateSlide = this.updateSlide.bind(this);
     this.render = this.render.bind(this);
     this.resize = this.resize.bind(this);
     this.isMobile = isMobile();
+    this.isInited = false;
+
+    this.progressBar = document.getElementById(`progress-bar`);
   }
 
   getSceneIndex(name) {
@@ -46,14 +49,21 @@ class Scene3dStory extends Scene3d {
     if (screenName !== SCREEN_NAMES.TOP && screenName !== SCREEN_NAMES.STORY) {
       return;
     }
+    this.mainScreen = screenName;
+
+    if (!this.isInited) {
+      return;
+    }
     if (screenName === SCREEN_NAMES.STORY) {
       this.suitcase.startAnimations();
+    } else {
+      setTimeout(() => {
+        this.intro.startAnimations();
+      }, 1400);
     }
-    this.mainScreen = screenName;
     this.setCameraPosition(screenName);
   }
 
-  // todo: разобраться с позицией камеры и добавить start/stop анимации
   updateSlide({detail}) {
     this.setCameraPosition(detail.slideName);
     this.storyScreen = detail.slideName;
@@ -90,7 +100,7 @@ class Scene3dStory extends Scene3d {
     // room
     if (texture.room) {
       const room = texture.room;
-      room.addSvgShapes(this.svgObjectsLoader);
+      room.addSvgShapes();
       room.position.x = plane.position.x;
       this.scene.add(room);
     }
@@ -102,7 +112,7 @@ class Scene3dStory extends Scene3d {
   initTextures() {
     const loadManager = new THREE.LoadingManager();
     const textureLoader = new THREE.TextureLoader(loadManager);
-    const textures = Object.entries(SCENES).map(([name, {image, ...other}]) => ({
+    const textures = Object.entries([]).map(([name, {image, ...other}]) => ({
       name,
       map: textureLoader.load(image),
       ...other
@@ -201,7 +211,7 @@ class Scene3dStory extends Scene3d {
           lightUnit.target = lightTarget;
           this.scene.add(lightTarget);
           light.add(lightUnit);
-          helper.add(new THREE.DirectionalLightHelper(lightUnit, 50));
+          // helper.add(new THREE.DirectionalLightHelper(lightUnit, 50));
 
           // const gui = new GUI();
           // const folder = gui.addFolder(`this light ${index}`);
@@ -216,7 +226,7 @@ class Scene3dStory extends Scene3d {
         case `PointLight`: {
           const lightUnit = new THREE.PointLight(lightColor, intensity, distance, decay);
           lightUnit.position.set(...Object.values(position));
-          helper.add(new THREE.PointLightHelper(lightUnit, 10));
+          // helper.add(new THREE.PointLightHelper(lightUnit, 10));
           if (castShadow && !this.isMobile) {
             lightUnit.castShadow = true;
             // lightUnit.shadow.mapSize.width = this.width;
@@ -242,8 +252,9 @@ class Scene3dStory extends Scene3d {
           // folder.add(lightUnit, `decay`, 0, 2, 1);
           // folder.open();
 
-          const cameraHelper = new THREE.CameraHelper(lightUnit.shadow.camera);
-          this.scene.add(cameraHelper);
+          // const cameraHelper = new THREE.CameraHelper(lightUnit.shadow.camera);
+          // this.scene.add(cameraHelper);
+
           light.add(lightUnit);
           break;
         }
@@ -264,23 +275,38 @@ class Scene3dStory extends Scene3d {
   }
 
   addIntro() {
-    const intro = new Intro(this.svgObjectsLoader);
-    intro.position.set(0, 0, 0);
-    this.addSceneObject(intro);
+    this.intro = new Intro();
+    this.intro.position.set(0, 0, 0);
+    this.addSceneObject(this.intro);
   }
 
   addApartment() {
-    const apartment = new Apartment(this.svgObjectsLoader);
-    apartment.position.set(0, -700, -3270);
-    this.addSceneObject(apartment);
+    this.apartment = new Apartment();
+    this.apartment.position.set(0, -700, -3270);
+    this.addSceneObject(this.apartment);
   }
 
   initScreenObjects() {
-    this.svgObjectsLoader.createMap().then(() => {
+    objectStore.createMap();
+
+    loadingManager.onProgress = (_, itemsLoaded, itemsTotal) => {
+      this.progressBar.textContent = `${Math.round(itemsLoaded / itemsTotal * 100)} %`;
+    };
+
+    loadingManager.onLoad = () => {
+
       this.addIntro();
       this.addApartment();
-      // eslint-disable-next-line no-console
-    }).catch((e) => console.warn(e));
+      this.initCameraRig(this.camera);
+      this.isInited = true;
+      document.body.classList.add(`page--loaded`);
+
+      setTimeout(() => {
+        this.progressBar.classList.add(`progress-bar--loaded`);
+        const fullPageScroll = new FullPageScroll();
+        fullPageScroll.init();
+      }, 0);
+    };
   }
 
   initCameraRig(camera) {
@@ -297,9 +323,6 @@ class Scene3dStory extends Scene3d {
     pointerLight.position.z = CameraRig.getMinDepth();
     this.cameraRig.addObjectToRotationAxis(pointerLight);
     this.cameraRig.addObjectToRotationAxis(this.suitcase);
-
-    this.orbitControls.target.set(0, 5, -2150);
-    this.orbitControls.update();
   }
 
   init() {
@@ -316,9 +339,7 @@ class Scene3dStory extends Scene3d {
     this.scene = scene;
     this.camera = camera;
 
-    this.addDeveloperHelpers({camera: this.camera, canvas, scene});
-
-    this.initCameraRig(camera);
+    // this.addDeveloperHelpers({camera: this.camera, canvas, scene});
     this.appendRendererToDOMElement(this.renderer, canvas);
     this.setListener();
 

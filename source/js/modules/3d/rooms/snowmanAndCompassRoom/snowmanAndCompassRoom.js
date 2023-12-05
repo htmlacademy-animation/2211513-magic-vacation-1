@@ -8,14 +8,12 @@ import {BaseObject} from '../../components/baseObject';
 import {degreesToRadians} from '../../utils';
 import {Animation} from '../../../animation';
 
-class SnowmanAndCompassRoom extends Room {
+export class SnowmanAndCompassRoom extends Room {
   constructor() {
     super();
 
     this.compass = {
       name: `compass`,
-      type: `gltf`,
-      path: `3d/module-6/rooms-scenes/objects/compass.gltf`,
       shadow: {
         receiveShadow: true,
         castShadow: true,
@@ -23,9 +21,7 @@ class SnowmanAndCompassRoom extends Room {
     };
 
     const staticObject = {
-      name: `scene1-static-output-3`,
-      type: `gltf`,
-      path: `3d/module-6/rooms-scenes/scenesStatic/scene3-static-output-1.gltf`,
+      name: `snowman-and-compass-room`,
       shadow: {
         receiveShadow: true,
         castShadow: true,
@@ -128,10 +124,9 @@ class SnowmanAndCompassRoom extends Room {
     this.addSnowMan();
     this.addRoad();
     this.addRoadBlocks();
+
     setTimeout(() => {
       this.startAnimations();
-    }, 3000);
+    }, 300);
   }
 }
-
-export const snowmanAndCompassRoom = new SnowmanAndCompassRoom();
