@@ -71,7 +71,7 @@ class ObjectStore {
         path: `3d/module-6/rooms-scenes/scenesStatic/scene2-static-output-1.gltf`,
       },
       {
-        name: `showman-and-compass-room`,
+        name: `snowman-and-compass-room`,
         type: `gltf`,
         path: `3d/module-6/rooms-scenes/scenesStatic/scene3-static-output-1.gltf`,
       },

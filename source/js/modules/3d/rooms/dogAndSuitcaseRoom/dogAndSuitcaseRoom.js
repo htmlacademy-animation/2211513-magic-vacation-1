@@ -4,7 +4,7 @@ import {COLORS_MAP} from '../../config/colors';
 import {MATERIAL_REFLECTIVITY} from '../../config/material-reflectivity';
 import {Room} from '../room';
 import * as THREE from 'three';
-import bezierEasing from '../../../../utils';
+import bezierEasing from '../../../../bezier-easing';
 import {Animation} from '../../../animation';
 import {degreesToRadians} from '../../utils';
 
