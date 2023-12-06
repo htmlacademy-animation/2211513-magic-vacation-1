@@ -5,6 +5,7 @@ import {COLORS_MAP} from '../config/colors';
 import {MATERIAL_REFLECTIVITY} from '../config/material-reflectivity';
 import {degreesToRadians} from '../utils';
 
+
 export class Saturn extends BaseObject {
   constructor({isShadowed, withMoon = true}) {
     super();
@@ -49,6 +50,8 @@ export class Saturn extends BaseObject {
       }
     };
 
+    this.name = `saturn`;
+
     this.addObject();
   }
 
@@ -56,23 +59,22 @@ export class Saturn extends BaseObject {
     const planet = new THREE.Group();
     const sphere = new THREE.SphereGeometry(this.planet.radius, this.planet.segments, this.planet.segments);
     const sphereMesh = new THREE.Mesh(
-      sphere,
-      this.createMaterial(this.planet.material)
+        sphere,
+        this.createMaterial(this.planet.material)
     );
 
     sphereMesh.castShadow = true;
 
     const ring = new LatheObject().createLatheGeometry(this.ring);
     const ringMesh = new THREE.Mesh(
-      ring,
-      this.createMaterial(this.ring.material)
+        ring,
+        this.createMaterial(this.ring.material)
     );
     ringMesh.castShadow = true;
     ringMesh.rotation.copy(new THREE.Euler(0, 0, degreesToRadians(18)), `XYZ`);
 
     this.ring.mesh = ringMesh;
     planet.add(sphereMesh, ringMesh);
-    this.addAxisToNode(sphereMesh);
 
     return planet;
   }
@@ -84,8 +86,8 @@ export class Saturn extends BaseObject {
   createMoon() {
     const sphere = new THREE.SphereGeometry(this.moon.radius, this.moon.segments, this.moon.segments);
     const sphereMesh = new THREE.Mesh(
-      sphere,
-      this.createMaterial(this.moon.material)
+        sphere,
+        this.createMaterial(this.moon.material)
     );
     sphereMesh.castShadow = true;
     return sphereMesh;
@@ -93,14 +95,14 @@ export class Saturn extends BaseObject {
 
   createWire() {
     const wire = new THREE.CylinderGeometry(
-      this.wire.radius,
-      this.wire.radius,
-      this.wire.height,
-      this.wire.segments
+        this.wire.radius,
+        this.wire.radius,
+        this.wire.height,
+        this.wire.segments
     );
     const wireMesh = new THREE.Mesh(
-      wire,
-      this.createMaterial(this.wire.material)
+        wire,
+        this.createMaterial(this.wire.material)
     );
     wireMesh.castShadow = true;
     return wireMesh;

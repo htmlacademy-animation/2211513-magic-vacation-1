@@ -2,7 +2,7 @@ import {BaseObject} from './baseObject';
 import {Animation} from '../../animation';
 import _ from '../../../utils';
 import {tick} from '../../../keyframe-tools';
-import {ModelObjectCreator} from './modelObjectCreator';
+import {ModelObjectCreator} from '../helpers/modelObjectCreator';
 
 export class Suitcase extends BaseObject {
   constructor() {
