@@ -3,12 +3,14 @@ import {SvgObjectCreator} from '../helpers/svgObjectCreator';
 import {ModelObjectCreator} from '../helpers/modelObjectCreator';
 import {objectStore} from '../helpers/objectStore';
 
+
 export class BaseSceneItem extends THREE.Group {
   constructor() {
     super();
     this.svgShapes = [];
     this.models = [];
     this.animations = [];
+    this.isAnimationStarted = false;
   }
 
   addSvgShapes(callback) {
@@ -60,6 +62,11 @@ export class BaseSceneItem extends THREE.Group {
   }
 
   startAnimations() {
+    if (this.isAnimationStarted) {
+      return;
+    }
+
+    this.isAnimationStarted = true;
     this.animations.forEach((anim) => {
       anim.start();
     });
