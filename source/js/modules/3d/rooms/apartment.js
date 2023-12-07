@@ -1,6 +1,5 @@
 import {DogAndSuitcaseRoom, PyramidAndCactusRoom, SnowmanAndCompassRoom, AiSonyaRoom} from '../rooms';
 import {BaseSceneItem} from '../components/baseSceneItem';
-
 export class Apartment extends BaseSceneItem {
   constructor() {
     super();
@@ -37,10 +36,5 @@ export class Apartment extends BaseSceneItem {
   create() {
     this.addRooms();
     this.rotateY(-1 * Math.PI / 4);
-
-    // todo добавит старт анимации при загрузке страницы после синхронизации двух сцен
-    setTimeout(() => {
-      this.startAnimations();
-    }, 1500);
   }
 }
